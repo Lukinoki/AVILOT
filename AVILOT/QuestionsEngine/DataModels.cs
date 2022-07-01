@@ -10,7 +10,7 @@ namespace AVILOT.QuestionsEngine.DataModels
 
     public class AnswerModel
     {
-        string Text { get; set; }
+        public string Text { get; set; }
     }
 
     public class QuestionModel
@@ -20,7 +20,6 @@ namespace AVILOT.QuestionsEngine.DataModels
         public int rightAnswerIndex { get; set; }
 
         public AnswerModel[] answerModels { get; set; }
-        public string correctAnswer { get { return answers[rightAnswerIndex]; } }
         public DateTime? lastRight { get; set; }
         public DateTime? lastWrong { get; set; }
         public string category { get; set; }
