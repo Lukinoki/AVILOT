@@ -23,6 +23,7 @@
         <ScrollView Grid.Row="1">
             <Label Text="Welcome to AVILOT"></Label>
         </ScrollView>
+        <Button Text="Open Import Page" Clicked="Button_Clicked"></Button>
     </Grid>
 
 </ContentPage>

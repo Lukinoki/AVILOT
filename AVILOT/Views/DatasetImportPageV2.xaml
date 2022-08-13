@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:viewmodels="clr-namespace:AVILOT.ViewModels" x:DataType="viewmodels:DatasetImportViewModel"
+             x:Class="AVILOT.Views.DatasetImportPageV2">
+    <ContentPage.Content>
+        <StackLayout>
+            <Button Text="Import New" Command="{Binding ImportNewCommand}"></Button>
+            <Label Text="{Binding ImportStatus}"></Label>
+            <Button Text="Clear Database" Command="{Binding DeleteDatabaseCommand}"></Button>
+            <Button Text="Print collections Questions" Command="{Binding PrintCollection}"></Button>
+            <Button Text="Print All collections" Command="{Binding PrintAllCollections}"></Button>
+            <Button Text="Answer Questions" Command="{Binding AnswerQuestionCommand}"></Button>
+            <Button Text="Print paginated questions" Command="{Binding PrintPages}"></Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
