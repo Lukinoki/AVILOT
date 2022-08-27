@@ -12,9 +12,9 @@ namespace AVILOT
         public App()
         {
             InitializeComponent();
-
-            DependencyService.Register<MockDataStore>();
-            MainPage = new AppShell();
+            var mpage = new AboutPage();
+            var navpage = new NavigationPage(mpage);
+            MainPage = navpage;
         }
 
         protected override void OnStart()
