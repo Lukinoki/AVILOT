@@ -4,18 +4,51 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
 using System.IO;
+using System.Diagnostics;
+
 
 namespace AVILOT.AVQuestionsEngine
 {
     public static class QuestionsEngine
     {
-        public static readonly Database.QuestionsDatabase GlobalQuestionsDatabase;
+        private static Database.QuestionsDatabase _GlobalQuestionsDatabase;
+        public static Database.QuestionsDatabase GlobalQuestionsDatabase
+        {
+            get
+            {
+                if (! initialized)
+                {
+                    throw new QuestionEngineNotInitializedException();
+                }
+                return _GlobalQuestionsDatabase;
+            }
+        }
+        private static AllQuestionsCollection _allQuestionsCollection;
+        public static AllQuestionsCollection allQuestionsCollection
+        {
+            get
+            {
+                if (!initialized)
+                {
+                    throw new QuestionEngineNotInitializedException();
+                }
+                return _allQuestionsCollection;
+            }
+        }
+
         static QuestionsEngine()
         {
-            GlobalQuestionsDatabase = new Database.QuestionsDatabase(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "dbV1.db"));
-            allQuestionsCollection = new AllQuestionsCollection(GlobalQuestionsDatabase);
+            initialized = false;
         }
-        public static readonly AllQuestionsCollection allQuestionsCollection;
+        private static bool initialized;
+        public static async Task Initialize()
+        {
+            Debug.WriteLine("Initializing Questions Engine");
+            _GlobalQuestionsDatabase = await Database.DbUtils.GetMainDatabase();
+            _allQuestionsCollection = new AllQuestionsCollection(_GlobalQuestionsDatabase);
+            Debug.WriteLine("Initialized Qestions Engine");
+            initialized = true;
+        }
         public static async Task<QuestionsCollection[]> GetAllColections()
         {
             var db = GlobalQuestionsDatabase;
@@ -29,25 +62,16 @@ namespace AVILOT.AVQuestionsEngine
             return QuestionsCollection.fromModel(model, db);
         }
         #region ImportQuestionsFromCSV
-        public static Task<QuestionsCollection> ImportQuestionsFromCsv(string Path, string CollectionName)
+        
+        public static Task<QuestionsCollection> ImportQuestionsFromCsv(StreamReader reader, string filename, string CollectionName = null)
         {
-            var (questionModels, answerModels) = CsvUtils.LoadQuestionsFromCSV(Path); //Load question models from CSV
-            return ImportQuestionsToDatabase(CollectionName, questionModels, answerModels);
-        }
-        public static Task<QuestionsCollection> ImportQuestionsFromCsv(Stream stream, string CollectionName)
-        {
-            var (questionModels, answerModels) = CsvUtils.LoadQuestionsFromCSV(stream); //Load question models from CSV
-            return ImportQuestionsToDatabase(CollectionName, questionModels, answerModels);
-        }
-        public static Task<QuestionsCollection> ImportQuestionsFromCsv(StreamReader reader, string CollectionName)
-        {
-            var (questionModels, answerModels) = CsvUtils.LoadQuestionsFromCSV(reader); //Load question models from CSV
-            return ImportQuestionsToDatabase(CollectionName, questionModels, answerModels);
+            var (questionModels, answerModels, collectionModel) = Database.CsvUtils.LoadQuestionsFromCSV(reader, filename, CollectionName); //Load question models from CSV
+            return ImportQuestionsToDatabase(collectionModel, questionModels, answerModels);
         }
         #endregion
-        public static async Task<QuestionsCollection> ImportQuestionsToDatabase(string CollectionName, Database.QuestionModel[] questionModels, Database.AnswerModel[][] answerModels)
+        public static async Task<QuestionsCollection> ImportQuestionsToDatabase(Database.CollectionModel collectionModel_, Database.QuestionModel[] questionModels, Database.AnswerModel[][] answerModels)
         {
-            var collectionModel = await GlobalQuestionsDatabase.CreateCollection(CollectionName); //create collection in db
+            var collectionModel = await GlobalQuestionsDatabase.CreateCollection(collectionModel_); //create collection in db
             //set correct parentCollectionId for each question
             var collectionId = collectionModel.Id;
             foreach (var questionModel in questionModels)

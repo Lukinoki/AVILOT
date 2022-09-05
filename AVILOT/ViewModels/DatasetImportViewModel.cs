@@ -26,6 +26,8 @@ namespace AVILOT.ViewModels
 
         public Command PrintPages { get; }
         public string ImportStatus { get; set; }
+
+        public Command OpenFirstQuestion { get; }
         public DatasetImportViewModel()
         {
             ImportNewCommand = new Command(ImportNewCollection);
@@ -77,7 +79,7 @@ namespace AVILOT.ViewModels
                 Console.WriteLine("STARTING PRINT");
                 //var collections = await QuestionsEngine.QuestionsEngine.getAllColections();
                 var collection = QuestionsEngine.allQuestionsCollection;
-                var allQuestions = collection.IterateOverQuestionPagesAsync(2);
+                var allQuestions = collection.IterateOverQuestionPagesAsync(10);
                 await foreach (var page in allQuestions)
                 {
                     Console.WriteLine("new page");
@@ -90,7 +92,6 @@ namespace AVILOT.ViewModels
                             Console.WriteLine($"ANS: {answer.Text}");
                         }
                     }
-                    await Task.Delay(100);
                 }
             });
 
@@ -111,7 +112,8 @@ namespace AVILOT.ViewModels
                 if (stream != null)
                 {
                     Console.WriteLine($"Loading {pickResult.FileName}");
-                    await QuestionsEngine.ImportQuestionsFromCsv(stream, pickResult.FileName);
+                    var streamreader = new StreamReader(stream);
+                    await QuestionsEngine.ImportQuestionsFromCsv(streamreader, pickResult.FileName);
                     Console.WriteLine("Loaded");
                 }
                 

@@ -3,7 +3,7 @@ using AVILOT.Views;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-
+using System.Threading.Tasks;
 namespace AVILOT
 {
     public partial class App : Application
@@ -12,6 +12,8 @@ namespace AVILOT
         public App()
         {
             InitializeComponent();
+            //app init
+            AVQuestionsEngine.QuestionsEngine.Initialize();
             var mpage = new AboutPage();
             var navpage = new NavigationPage(mpage);
             MainPage = navpage;

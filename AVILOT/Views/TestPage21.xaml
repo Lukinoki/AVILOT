@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AVILOT.Views.TestPage21">
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout x:Name="header" Orientation="Horizontal">
+                <Button Padding="25" BackgroundColor="Transparent" HorizontalOptions="Start" VerticalOptions="Start"></Button>
+                <Button Padding="0,33,25,0"  BackgroundColor="Transparent" HorizontalOptions="EndAndExpand" VerticalOptions="Start"></Button>
+            </StackLayout>
+
+            <Label Text="{Binding Text}" FontFamily="Inter" TextColor="White" FontAttributes="Bold" FontSize="36"></Label>
+            <ListView ItemsSource="{Binding answers}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame BackgroundColor="#20FFFFFF" CornerRadius="15">
+                                <StackLayout>
+                                    <Label Text="{Binding Text}"></Label>
+                                </StackLayout>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            
+            <StackLayout x:Name="Footer" VerticalOptions="EndAndExpand" Orientation="Horizontal">
+                <Frame BackgroundColor="#10FFFFFF" CornerRadius="15"></Frame>
+                <Frame BackgroundColor="#10FFFFFF" CornerRadius="15" HorizontalOptions="EndAndExpand"></Frame>
+            </StackLayout>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

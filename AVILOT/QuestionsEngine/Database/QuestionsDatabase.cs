@@ -16,20 +16,13 @@ namespace AVILOT.AVQuestionsEngine.Database
         public QuestionsDatabase(string dbPath)
         {
             db = new SQLiteAsyncConnection(dbPath);
-            db.CreateTableAsync<AnswerModel>(SQLite.CreateFlags.ImplicitPK | SQLite.CreateFlags.AutoIncPK);
-            db.CreateTableAsync<QuestionModel>(SQLite.CreateFlags.ImplicitPK | SQLite.CreateFlags.AutoIncPK);
-            db.CreateTableAsync<CollectionModel>(SQLite.CreateFlags.ImplicitPK | SQLite.CreateFlags.AutoIncPK);
+            db.CreateTableAsync<AnswerModel>();
+            db.CreateTableAsync<QuestionModel>();
+            db.CreateTableAsync<CollectionModel>();
             CollectionTable = db.Table<CollectionModel>();
             QuestionTable = db.Table<QuestionModel>();
             AnswerTable = db.Table<AnswerModel>();
-            foreach (var mapping in db.TableMappings)
-            {
-                Console.WriteLine($"{mapping.TableName} ");
-                foreach(var column in mapping.Columns)
-                {
-                    Console.WriteLine(column.Name);
-                }
-            }
+            
         }
         //utils
         public async Task ClearDatabase()
@@ -110,6 +103,11 @@ namespace AVILOT.AVQuestionsEngine.Database
             };
             await db.InsertAsync(collection);
             return collection;
+        }
+        async public Task<CollectionModel> CreateCollection(CollectionModel model)
+        {
+            await db.InsertAsync(model);
+            return model;
         }
         async public Task<QuestionModel> CreateQuestion(QuestionModel question)
         {

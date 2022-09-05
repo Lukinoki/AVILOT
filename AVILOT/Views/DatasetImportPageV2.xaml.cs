@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using AVILOT.ViewModels;
+using AVILOT.AVQuestionsEngine;
 
 namespace AVILOT.Views
 {

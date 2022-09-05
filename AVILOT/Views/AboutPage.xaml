@@ -23,7 +23,16 @@
         <ScrollView Grid.Row="1">
             <Label Text="Welcome to AVILOT"></Label>
         </ScrollView>
-        <Button Text="Open Import Page" Clicked="Button_Clicked"></Button>
+        <StackLayout>
+            <Button Text="Open Import Page" Clicked="Button_Clicked"></Button>
+            <Button Text="Open Question Page" Clicked="Button_Clicked_2"></Button>
+            <Label TextType="Html">
+                <![CDATA[
+    This is <strong style="color:red">HTML</strong> text. <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/364190/capsule_616x353.jpg?t=1572321559">
+    ]]>
+            </Label>
+        </StackLayout>
+        
     </Grid>
 
 </ContentPage>
