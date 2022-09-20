@@ -53,13 +53,13 @@ namespace AVILOT.AVQuestionsEngine
         {
             var db = GlobalQuestionsDatabase;
             var collections = await GlobalQuestionsDatabase.GetCollections();
-            return collections.Select(x => QuestionsCollection.fromModel(x, db)).ToArray();
+            return await Task.WhenAll( collections.Select(async x => await QuestionsCollection.fromModel(x, db)));
         }
         public static async Task<QuestionsCollection> GetCollectionById(int id)
         {
             var db = GlobalQuestionsDatabase;
             var model = await GlobalQuestionsDatabase.GetCollectionById(id);
-            return QuestionsCollection.fromModel(model, db);
+            return await QuestionsCollection.fromModel(model, db);
         }
         #region ImportQuestionsFromCSV
         
@@ -117,7 +117,10 @@ namespace AVILOT.AVQuestionsEngine
                 Text = model.Text,
                 Correct = model.Correct,
                 ParentQuestionId = model.ParentQuestionId,
-                ParentQuestion = parent
+                ParentQuestion = parent,
+                AnsweredExplanation = model.AnsweredExplanation,
+                AnswerIndex = model.AnswerIndex,
+                ImageUrl = model.ImageUrl,
             };
             
         }
@@ -125,7 +128,6 @@ namespace AVILOT.AVQuestionsEngine
     public class Question : Database.QuestionModel
     {
         public Answer[] Answers { get; set; }
-
         public QuestionsCollection ParentCollection { get; set; }
 
         public Task<bool> Select(Answer answer)
@@ -149,6 +151,7 @@ namespace AVILOT.AVQuestionsEngine
                 LastWrongAnswer = model.LastWrongAnswer,
                 AnsweredCorrectCount = model.AnsweredCorrectCount,
                 AnsweredWrongCount = model.AnsweredWrongCount,
+                ImageUrl = model.ImageUrl
             };
             question.ParentCollection = parent; //set parent collection
             question.Answers = new Answer[answerModels.Length];
@@ -167,18 +170,29 @@ namespace AVILOT.AVQuestionsEngine
     public class QuestionsCollection : Database.CollectionModel
     {
         //init
-        protected readonly Database.QuestionsDatabase database;
+        public readonly Database.QuestionsDatabase database;
+        public QuestionsCollection[] ChildCollections { get; private set; }
+
         public QuestionsCollection(Database.QuestionsDatabase db)
         {
             database = db;
         }
-        internal static QuestionsCollection fromModel(Database.CollectionModel model, Database.QuestionsDatabase db)
+        internal async static Task<QuestionsCollection> fromModel(Database.CollectionModel model, Database.QuestionsDatabase db)
         {
             var collection = new QuestionsCollection(db)
             {
                 Id = model.Id,
-                Name = model.Name
+                Name = model.Name,
+                About = model.About,
+                ImageBannerUrl = model.ImageBannerUrl,
+                ImageUrl = model.ImageUrl,
+                ParentId = model.ParentId
             };
+            var childCols = await db.GetSubCollections(model.Id);
+            if (childCols != null)
+            {
+                collection.ChildCollections = await Task.WhenAll(childCols.Select(async i => await fromModel(i, db)));
+            }
             return collection;
 
         }
@@ -435,5 +449,51 @@ namespace AVILOT.AVQuestionsEngine
         public override Task<int> GetAnsweredCount() { return database.GetAnsweredCount(); }
         public override Task<int> GetNotAnsweredCount() { return database.GetNotAnsweredCount(); }
         #endregion
+    }
+    public class JoinedQuestionsCollection : QuestionsCollection
+    {
+        public readonly QuestionsCollection[] JoinedCollections;
+        public readonly int[] JoinedCollectionsIds;
+        public JoinedQuestionsCollection(QuestionsCollection[] collections) : base(collections[0].database)
+        {
+            if (collections == null || collections.Length == 0)
+            {
+                throw new ArgumentNullException(nameof(collections));
+            }
+            JoinedCollections = collections;
+            JoinedCollectionsIds = collections.Select(x => x.Id).ToArray();
+
+        }
+        public override async Task<Question[]> GetAllQuestions()
+        {
+            var models = await database.GetCollectionsQuestions(JoinedCollectionsIds);
+            return await QuestionsFromModels(models);
+        }
+        public override async IAsyncEnumerable<Question> IterateOverQuestionsAsync()
+        {
+            var questionCount = await GetQuestionCount();
+            var currentQuestionIndex = 0;
+            const int PerPageCount = 0;
+            do
+            {
+                var questionModels = await database.GetCollectionsQuestionsAtRange(JoinedCollectionsIds, currentQuestionIndex, PerPageCount);
+                yield return await QuestionFromModel(questionModels[0]);
+                currentQuestionIndex += PerPageCount;
+            }
+            while (currentQuestionIndex < questionCount);
+        }
+        public override async IAsyncEnumerable<Question[]> IterateOverQuestionPagesAsync(int PerPageCount)
+        {
+            var questionCount = await GetQuestionCount();
+            var currentQuestionIndex = 0;
+            do
+            {
+                var questionModels = await database.GetCollectionsQuestionsAtRange(JoinedCollectionsIds, currentQuestionIndex, PerPageCount);
+                yield return await QuestionsFromModels(questionModels);
+                currentQuestionIndex += PerPageCount;
+            }
+            while (currentQuestionIndex < questionCount);
+        }
+
     }
 }

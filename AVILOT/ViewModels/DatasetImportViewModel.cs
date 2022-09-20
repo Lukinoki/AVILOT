@@ -1,10 +1,10 @@
 ﻿using AVILOT.Models;
-using AVILOT.Services;
 using AVILOT.Views;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Essentials;
 using System.IO;
@@ -121,5 +121,15 @@ namespace AVILOT.ViewModels
             
         }
 
+        private Command testJoins;
+        public ICommand TestJoins => testJoins ??= new Command(PerformTestJoins);
+
+        private async void PerformTestJoins()
+        {
+            var collections = await QuestionsEngine.GetAllColections();
+            var join = new JoinedQuestionsCollection(collections);
+            var questions = await join.GetAllQuestions();
+            Console.WriteLine(questions.Length);
+        }
     }
 }

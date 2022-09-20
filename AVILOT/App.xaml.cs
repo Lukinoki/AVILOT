@@ -1,5 +1,4 @@
-﻿using AVILOT.Services;
-using AVILOT.Views;
+﻿using AVILOT.Views;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;

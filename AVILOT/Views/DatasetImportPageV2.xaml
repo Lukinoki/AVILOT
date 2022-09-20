@@ -11,6 +11,7 @@
             <Button Text="Print All collections" Command="{Binding PrintAllCollections}"></Button>
             <Button Text="Answer Questions" Command="{Binding AnswerQuestionCommand}"></Button>
             <Button Text="Print paginated questions" Command="{Binding PrintPages}"></Button>
+            <Button Text="Test Joins" Command="{Binding TestJoins}"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

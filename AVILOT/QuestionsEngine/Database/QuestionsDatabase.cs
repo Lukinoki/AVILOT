@@ -43,6 +43,10 @@ namespace AVILOT.AVQuestionsEngine.Database
         {
             return QuestionTable.CountAsync(v => v.Id.Equals(collectionId));
         }
+        private string GenerateQuerryParametersFromList(int[] list)
+        {
+            return "(" + String.Join(",", list) + ")";
+        }
         //get all
         public Task<CollectionModel[]> GetCollections()
         {
@@ -57,13 +61,24 @@ namespace AVILOT.AVQuestionsEngine.Database
             return AnswerTable.ToArrayAsync();
         }
         //building collections
+        public Task<CollectionModel[]> GetSubCollections(int CollectionId)
+        {
+            return CollectionTable.Where(v => v.ParentId == CollectionId).ToArrayAsync();
+        }
         public Task<QuestionModel[]> GetCollectionsQuestions(int CollectionId)
         {
             return QuestionTable.Where(v => v.Id.Equals(CollectionId)).ToArrayAsync();
         }
-        public Task<AnswerModel[]> GetQuestionsAnswers(int QuestionId)
+        public async Task<QuestionModel[]> GetCollectionsQuestions(int[] CollectionIds)
         {
-            return AnswerTable.Where(v => v.ParentQuestionId.Equals(QuestionId)).ToArrayAsync();
+            var quer = String.Join(",", CollectionIds);
+            var list = await db.QueryAsync<QuestionModel>($"SELECT * FROM QuestionModel WHERE ParentQuestionId IN ({quer})", CollectionIds);
+            return list.ToArray();
+        }
+        public async Task<AnswerModel[]> GetQuestionsAnswers(int QuestionId)
+        {
+            var list = await db.QueryAsync<AnswerModel>($"SELECT * FROM AnswerModel WHERE ParentQuestionId = ? ORDER BY AnswerIndex ASC", QuestionId);
+            return list.ToArray();
         }
         public Task<QuestionModel> GetQuestionAtIndex(int index)
         {
@@ -73,6 +88,7 @@ namespace AVILOT.AVQuestionsEngine.Database
         {
             return QuestionTable.Where(v => v.Id.Equals(CollectionId)).ElementAtAsync(index);
         }
+        
         public Task<List<QuestionModel>> GetQuestionsAtRange(int LimitIndex, int ResultsCount)
         {
             return db.QueryAsync<QuestionModel>($"SELECT * FROM QuestionModel ORDER BY Id ASC LIMIT ?, ?", LimitIndex, ResultsCount);
@@ -80,6 +96,16 @@ namespace AVILOT.AVQuestionsEngine.Database
         public Task<List<QuestionModel>> GetCollectionsQuestionsAtRange(int CollectionId, int LimitIndex, int ResultsCount)
         {
             return db.QueryAsync<QuestionModel>($"SELECT * FROM QuestionModel WHERE ParentCollectionId = ? ORDER BY Id ASC LIMIT ?, ?", CollectionId, LimitIndex, ResultsCount);
+        }
+        public async Task<QuestionModel[]> GetCollectionsQuestionsAtRange(int[] CollectionIds, int LimitIndex, int ResultsCount)
+        {
+            var quer = String.Join(",", CollectionIds);
+            var list = await db.QueryAsync<QuestionModel>($"SELECT * FROM QuestionModel WHERE ParentQuestionId IN ({quer}) LIMIT ? OFFSET ?", ResultsCount, LimitIndex);
+            if (list.Count == 0)
+            {
+                throw new UnknownDatabaseErrorException("Error with querry");
+            }
+            return list.ToArray();
         }
         //get by Id
         public Task<CollectionModel> GetCollectionById(int CollectionId)
