@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:ViewModels="clr-namespace:avilot.ViewModels"
+             x:Class="avilot.Views.TestPage"
+             x:DataType="ViewModels:TestBinding"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.Content>
+        <StackLayout x:Name="test" Padding="10">
+            <StackLayout x:Name="header" Orientation="Horizontal">
+                <ImageButton Clicked="Back" Padding="25" Source="back"  BackgroundColor="Transparent" HorizontalOptions="Start" VerticalOptions="Start"></ImageButton>
+                <ImageButton Clicked="Like" Padding="0,33,25,0"  Source="like" BackgroundColor="Transparent" HorizontalOptions="EndAndExpand" VerticalOptions="Start"></ImageButton>
+            </StackLayout>
+
+            <Label x:Name="question" FontFamily="Inter" TextColor="White" FontAttributes="Bold" FontSize="36"></Label>
+
+            <StackLayout x:Name="Answers"></StackLayout>
+
+            <StackLayout x:Name="Footer" VerticalOptions="EndAndExpand" Orientation="Horizontal">
+                <Frame BackgroundColor="#10FFFFFF" CornerRadius="15" WidthRequest="150">
+                    <StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label HorizontalOptions="Start" Text="Correct:"></Label>
+                            <Label HorizontalOptions="EndAndExpand" x:Name="CorrectAnswers"></Label>
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <Label HorizontalOptions="Start" Text="Wrong:"></Label>
+                            <Label HorizontalOptions="EndAndExpand" x:Name="WrongAnswers"></Label>
+                        </StackLayout>
+                    </StackLayout>
+                </Frame>
+                
+                <Frame BackgroundColor="#10FFFFFF" CornerRadius="15" HorizontalOptions="End">
+                    <StackLayout>
+                        <Label HorizontalOptions="Start" x:Name="AnsweredCount"></Label>
+                        <Label HorizontalOptions="End" x:Name="AllCount"></Label>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+
+        </StackLayout>
+    </ContentPage.Content>
+
+    
+</ContentPage>

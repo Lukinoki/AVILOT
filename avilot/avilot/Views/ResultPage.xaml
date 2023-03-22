@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="avilot.Views.ResultPage"
+             Title="ResultPage"
+             NavigationPage.HasNavigationBar="False" >
+    <ContentPage.Content>
+        <StackLayout>
+            <Label 
+                x:Name="TestName"
+                HorizontalOptions="StartAndExpand"
+                VerticalOptions="Start"
+                FontSize="34"
+                TextColor="White"
+                FontFamily="Inter"
+                FontAttributes="Bold"
+                Padding="25"/>
+            
+            <BoxView Background="#1AFFFFFF" Opacity="0.2" HeightRequest="3" Margin="20,0,20,5"></BoxView>
+
+            <StackLayout x:Name="list"></StackLayout>
+            
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
