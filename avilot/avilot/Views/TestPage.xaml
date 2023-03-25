@@ -6,35 +6,42 @@
              NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
         <StackLayout x:Name="test" Padding="10">
-            <StackLayout x:Name="header" Orientation="Horizontal">
-                <ImageButton Clicked="Back" Padding="25" Source="back"  BackgroundColor="Transparent" HorizontalOptions="Start" VerticalOptions="Start"></ImageButton>
-                <ImageButton Clicked="Like" Padding="0,33,25,0"  Source="like" BackgroundColor="Transparent" HorizontalOptions="EndAndExpand" VerticalOptions="Start"></ImageButton>
+            <StackLayout x:Name="header" Orientation="Horizontal" Margin="10">
+                <ImageButton Clicked="Back" Source="back"  BackgroundColor="Transparent" HorizontalOptions="Start" VerticalOptions="Center"></ImageButton>
+                <ImageButton Clicked="Like" Source="like" BackgroundColor="Transparent" HorizontalOptions="EndAndExpand" VerticalOptions="Center"></ImageButton>
             </StackLayout>
 
-            <Label x:Name="question" FontFamily="Inter" TextColor="White" FontAttributes="Bold" FontSize="36"></Label>
+            <Label x:Name="question" FontFamily="Inter" TextColor="White" FontAttributes="Bold" FontSize="36" Padding="0,30"></Label>
 
             <StackLayout x:Name="Answers"></StackLayout>
 
             <StackLayout x:Name="Footer" VerticalOptions="EndAndExpand" Orientation="Horizontal">
-                <Frame BackgroundColor="#10FFFFFF" CornerRadius="15" WidthRequest="150">
-                    <StackLayout>
+                
+                <Frame BackgroundColor="#10FFFFFF" CornerRadius="15" Margin="5" HorizontalOptions="FillAndExpand">
+                    <StackLayout VerticalOptions="Center">
                         <StackLayout Orientation="Horizontal">
-                            <Label HorizontalOptions="Start" Text="Correct:"></Label>
-                            <Label HorizontalOptions="EndAndExpand" x:Name="CorrectAnswers"></Label>
+                            <Label HorizontalOptions="Start" FontSize="20" Text="Correct:"></Label>
+                            <Label HorizontalOptions="EndAndExpand" FontSize="20" x:Name="CorrectAnswers"></Label>
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <Label HorizontalOptions="Start" Text="Wrong:"></Label>
-                            <Label HorizontalOptions="EndAndExpand" x:Name="WrongAnswers"></Label>
+                            <Label HorizontalOptions="Start" FontSize="20" Text="Wrong:"></Label>
+                            <Label HorizontalOptions="EndAndExpand" FontSize="20" x:Name="WrongAnswers"></Label>
                         </StackLayout>
                     </StackLayout>
+                </Frame>
+
+                <Frame BackgroundColor="#10FFFFFF" CornerRadius="15"  Margin="5">
+                    <RelativeLayout BackgroundColor="Transparent">
+                        <StackLayout RelativeLayout.WidthConstraint="75" Margin="-10" BackgroundColor="Transparent">
+                            <Image Source="slash"></Image>
+                        </StackLayout>
+                        <StackLayout RelativeLayout.WidthConstraint="75" BackgroundColor="Transparent">
+                            <Label HorizontalOptions="Start"  VerticalOptions="Start" FontSize="25" FontAttributes="Bold" x:Name="AnsweredCount"></Label>
+                            <Label HorizontalOptions="End" VerticalOptions="End" FontSize="25" FontAttributes="Bold" x:Name="AllCount"></Label>
+                        </StackLayout>
+                    </RelativeLayout>
                 </Frame>
                 
-                <Frame BackgroundColor="#10FFFFFF" CornerRadius="15" HorizontalOptions="End">
-                    <StackLayout>
-                        <Label HorizontalOptions="Start" x:Name="AnsweredCount"></Label>
-                        <Label HorizontalOptions="End" x:Name="AllCount"></Label>
-                    </StackLayout>
-                </Frame>
             </StackLayout>
 
         </StackLayout>

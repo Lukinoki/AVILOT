@@ -9922,12 +9922,13 @@ public final class R {
     public static final int notify_panel_notification_icon_bg=0x7f070093;
     public static final int preference_list_divider_material=0x7f070094;
     public static final int region=0x7f070095;
-    public static final int start=0x7f070096;
-    public static final int streak_img=0x7f070097;
-    public static final int test_custom_background=0x7f070098;
-    public static final int tooltip_frame_dark=0x7f070099;
-    public static final int tooltip_frame_light=0x7f07009a;
-    public static final int welcome=0x7f07009b;
+    public static final int slash=0x7f070096;
+    public static final int start=0x7f070097;
+    public static final int streak_img=0x7f070098;
+    public static final int test_custom_background=0x7f070099;
+    public static final int tooltip_frame_dark=0x7f07009a;
+    public static final int tooltip_frame_light=0x7f07009b;
+    public static final int welcome=0x7f07009c;
   }
   public static final class id {
     public static final int ALT=0x7f080000;

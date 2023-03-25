@@ -7,6 +7,7 @@ using System.Reflection;
 using avilot.AVQuestionsEngine;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Xamarin.Forms.Xaml;
 
 namespace avilot.Views
 {
@@ -34,6 +35,16 @@ namespace avilot.Views
                 using var reader3 = new StreamReader(assembly3.GetManifestResourceStream(resourceName3));
                 await QuestionsEngine.ImportQuestionsFromCsv(reader3, "Test3");
                 */
+                /*
+                var assembly4 = Assembly.GetExecutingAssembly();
+                var resourceName4 = "avilot.PLA2.csv";
+                using var reader4 = new StreamReader(assembly4.GetManifestResourceStream(resourceName4));
+                var (questionModels, answerModels) = CsvUtils.LoadQuestionsFromCSV(reader); //Load question models from CSV
+                await QuestionsEngine.ImportQuestionsToDatabase("Test1", questionModels, answerModels);
+                var c1 = await QuestionsEngine.GetCollectionById(1);
+                */
+
+
                 // start initial dialog
                 await Navigation.PushAsync(new Welcome());
                 Settings.FirstRun = false;
@@ -47,11 +58,11 @@ namespace avilot.Views
                 for (int i = 0; i < collections.Count(); i++)
                 {
                     BindableLayout.SetItemsSource(AllCollections, collections);
-                }
+                }/*
                 // last started test
                 var LastTestedCollection = await QuestionsEngine.GetCollectionById(0);
                 continueLastTest.Text = LastTestedCollection.Name;
-                continueLastTestButton.BindingContext = LastTestedCollection.Id;
+                continueLastTestButton.BindingContext = LastTestedCollection.Id;*/
             }
         }
 

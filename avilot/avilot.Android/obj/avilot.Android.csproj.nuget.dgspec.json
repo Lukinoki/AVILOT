@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\User\\Documents\\verzekdeasponnecofunguje\\avilot\\avilot.Android\\avilot.Android.csproj": {}
+    "C:\\Users\\User\\Documents\\Lusifly\\avilot\\avilot.Android\\avilot.Android.csproj": {}
   },
   "projects": {
-    "C:\\Users\\User\\Documents\\verzekdeasponnecofunguje\\avilot\\avilot.Android\\avilot.Android.csproj": {
+    "C:\\Users\\User\\Documents\\Lusifly\\avilot\\avilot.Android\\avilot.Android.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\Documents\\verzekdeasponnecofunguje\\avilot\\avilot.Android\\avilot.Android.csproj",
+        "projectUniqueName": "C:\\Users\\User\\Documents\\Lusifly\\avilot\\avilot.Android\\avilot.Android.csproj",
         "projectName": "avilot.Android",
-        "projectPath": "C:\\Users\\User\\Documents\\verzekdeasponnecofunguje\\avilot\\avilot.Android\\avilot.Android.csproj",
+        "projectPath": "C:\\Users\\User\\Documents\\Lusifly\\avilot\\avilot.Android\\avilot.Android.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\Documents\\verzekdeasponnecofunguje\\avilot\\avilot.Android\\obj\\",
+        "outputPath": "C:\\Users\\User\\Documents\\Lusifly\\avilot\\avilot.Android\\obj\\",
         "projectStyle": "PackageReference",
         "skipContentFileWrite": true,
         "fallbackFolders": [
@@ -32,8 +32,8 @@
         "frameworks": {
           "monoandroid12.0": {
             "projectReferences": {
-              "C:\\Users\\User\\Documents\\verzekdeasponnecofunguje\\avilot\\avilot\\avilot.csproj": {
-                "projectPath": "C:\\Users\\User\\Documents\\verzekdeasponnecofunguje\\avilot\\avilot\\avilot.csproj"
+              "C:\\Users\\User\\Documents\\Lusifly\\avilot\\avilot\\avilot.csproj": {
+                "projectPath": "C:\\Users\\User\\Documents\\Lusifly\\avilot\\avilot\\avilot.csproj"
               }
             }
           }
@@ -44,11 +44,11 @@
           "dependencies": {
             "CsvHelper": {
               "target": "Package",
-              "version": "[28.0.1, )"
+              "version": "[30.0.1, )"
             },
             "Microsoft.Bcl.AsyncInterfaces": {
               "target": "Package",
-              "version": "[6.0.0, )"
+              "version": "[7.0.0, )"
             },
             "Xam.Plugins.Forms.ProgressRing": {
               "target": "Package",
@@ -56,15 +56,15 @@
             },
             "Xamarin.CommunityToolkit": {
               "target": "Package",
-              "version": "[2.0.4, )"
+              "version": "[2.0.5, )"
             },
             "Xamarin.Essentials": {
               "target": "Package",
-              "version": "[1.7.3, )"
+              "version": "[1.7.5, )"
             },
             "Xamarin.Forms": {
               "target": "Package",
-              "version": "[5.0.0.2515, )"
+              "version": "[5.0.0.2578, )"
             },
             "sqlite-net-pcl": {
               "target": "Package",
@@ -74,14 +74,14 @@
         }
       }
     },
-    "C:\\Users\\User\\Documents\\verzekdeasponnecofunguje\\avilot\\avilot\\avilot.csproj": {
+    "C:\\Users\\User\\Documents\\Lusifly\\avilot\\avilot\\avilot.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\Documents\\verzekdeasponnecofunguje\\avilot\\avilot\\avilot.csproj",
+        "projectUniqueName": "C:\\Users\\User\\Documents\\Lusifly\\avilot\\avilot\\avilot.csproj",
         "projectName": "avilot",
-        "projectPath": "C:\\Users\\User\\Documents\\verzekdeasponnecofunguje\\avilot\\avilot\\avilot.csproj",
+        "projectPath": "C:\\Users\\User\\Documents\\Lusifly\\avilot\\avilot\\avilot.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\Documents\\verzekdeasponnecofunguje\\avilot\\avilot\\obj\\",
+        "outputPath": "C:\\Users\\User\\Documents\\Lusifly\\avilot\\avilot\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -117,11 +117,11 @@
           "dependencies": {
             "CsvHelper": {
               "target": "Package",
-              "version": "[28.0.1, )"
+              "version": "[30.0.1, )"
             },
             "Microsoft.Bcl.AsyncInterfaces": {
               "target": "Package",
-              "version": "[6.0.0, )"
+              "version": "[7.0.0, )"
             },
             "NETStandard.Library": {
               "suppressParent": "All",
@@ -135,11 +135,11 @@
             },
             "Xamarin.Essentials": {
               "target": "Package",
-              "version": "[1.7.3, )"
+              "version": "[1.7.5, )"
             },
             "Xamarin.Forms": {
               "target": "Package",
-              "version": "[5.0.0.2515, )"
+              "version": "[5.0.0.2578, )"
             },
             "sqlite-net-pcl": {
               "target": "Package",

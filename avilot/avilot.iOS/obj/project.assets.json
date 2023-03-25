@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     "Xamarin.iOS,Version=v1.0": {
-      "CsvHelper/28.0.1": {
+      "CsvHelper/30.0.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.CSharp": "4.3.0"
@@ -18,7 +18,7 @@
           }
         }
       },
-      "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
+      "Microsoft.Bcl.AsyncInterfaces/7.0.0": {
         "type": "package",
         "compile": {
           "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
@@ -164,7 +164,7 @@
           "lib/Xamarin.iOS10/ProgressRing.Forms.Plugin.iOS.dll": {}
         }
       },
-      "Xamarin.Essentials/1.7.3": {
+      "Xamarin.Essentials/1.7.5": {
         "type": "package",
         "dependencies": {
           "System.Numerics.Vectors": "4.5.0"
@@ -185,7 +185,7 @@
           }
         }
       },
-      "Xamarin.Forms/5.0.0.2515": {
+      "Xamarin.Forms/5.0.0.2578": {
         "type": "package",
         "compile": {
           "lib/Xamarin.iOS10/Xamarin.Forms.Core.dll": {
@@ -328,11 +328,11 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
-          "CsvHelper": "28.0.1",
-          "Microsoft.Bcl.AsyncInterfaces": "6.0.0",
+          "CsvHelper": "30.0.1",
+          "Microsoft.Bcl.AsyncInterfaces": "7.0.0",
           "Xam.Plugins.Forms.ProgressRing": "0.1.2",
-          "Xamarin.Essentials": "1.7.3",
-          "Xamarin.Forms": "5.0.0.2515",
+          "Xamarin.Essentials": "1.7.5",
+          "Xamarin.Forms": "5.0.0.2578",
           "sqlite-net-pcl": "1.8.116"
         },
         "compile": {
@@ -344,7 +344,7 @@
       }
     },
     "Xamarin.iOS,Version=v1.0/win": {
-      "CsvHelper/28.0.1": {
+      "CsvHelper/30.0.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.CSharp": "4.3.0"
@@ -360,7 +360,7 @@
           }
         }
       },
-      "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
+      "Microsoft.Bcl.AsyncInterfaces/7.0.0": {
         "type": "package",
         "compile": {
           "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
@@ -506,7 +506,7 @@
           "lib/Xamarin.iOS10/ProgressRing.Forms.Plugin.iOS.dll": {}
         }
       },
-      "Xamarin.Essentials/1.7.3": {
+      "Xamarin.Essentials/1.7.5": {
         "type": "package",
         "dependencies": {
           "System.Numerics.Vectors": "4.5.0"
@@ -527,7 +527,7 @@
           }
         }
       },
-      "Xamarin.Forms/5.0.0.2515": {
+      "Xamarin.Forms/5.0.0.2578": {
         "type": "package",
         "compile": {
           "lib/Xamarin.iOS10/Xamarin.Forms.Core.dll": {
@@ -670,11 +670,11 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
-          "CsvHelper": "28.0.1",
-          "Microsoft.Bcl.AsyncInterfaces": "6.0.0",
+          "CsvHelper": "30.0.1",
+          "Microsoft.Bcl.AsyncInterfaces": "7.0.0",
           "Xam.Plugins.Forms.ProgressRing": "0.1.2",
-          "Xamarin.Essentials": "1.7.3",
-          "Xamarin.Forms": "5.0.0.2515",
+          "Xamarin.Essentials": "1.7.5",
+          "Xamarin.Forms": "5.0.0.2578",
           "sqlite-net-pcl": "1.8.116"
         },
         "compile": {
@@ -686,7 +686,7 @@
       }
     },
     "Xamarin.iOS,Version=v1.0/win-x64": {
-      "CsvHelper/28.0.1": {
+      "CsvHelper/30.0.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.CSharp": "4.3.0"
@@ -702,7 +702,7 @@
           }
         }
       },
-      "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
+      "Microsoft.Bcl.AsyncInterfaces/7.0.0": {
         "type": "package",
         "compile": {
           "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
@@ -848,7 +848,7 @@
           "lib/Xamarin.iOS10/ProgressRing.Forms.Plugin.iOS.dll": {}
         }
       },
-      "Xamarin.Essentials/1.7.3": {
+      "Xamarin.Essentials/1.7.5": {
         "type": "package",
         "dependencies": {
           "System.Numerics.Vectors": "4.5.0"
@@ -869,7 +869,7 @@
           }
         }
       },
-      "Xamarin.Forms/5.0.0.2515": {
+      "Xamarin.Forms/5.0.0.2578": {
         "type": "package",
         "compile": {
           "lib/Xamarin.iOS10/Xamarin.Forms.Core.dll": {
@@ -1012,11 +1012,11 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
-          "CsvHelper": "28.0.1",
-          "Microsoft.Bcl.AsyncInterfaces": "6.0.0",
+          "CsvHelper": "30.0.1",
+          "Microsoft.Bcl.AsyncInterfaces": "7.0.0",
           "Xam.Plugins.Forms.ProgressRing": "0.1.2",
-          "Xamarin.Essentials": "1.7.3",
-          "Xamarin.Forms": "5.0.0.2515",
+          "Xamarin.Essentials": "1.7.5",
+          "Xamarin.Forms": "5.0.0.2578",
           "sqlite-net-pcl": "1.8.116"
         },
         "compile": {
@@ -1028,7 +1028,7 @@
       }
     },
     "Xamarin.iOS,Version=v1.0/win-x86": {
-      "CsvHelper/28.0.1": {
+      "CsvHelper/30.0.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.CSharp": "4.3.0"
@@ -1044,7 +1044,7 @@
           }
         }
       },
-      "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
+      "Microsoft.Bcl.AsyncInterfaces/7.0.0": {
         "type": "package",
         "compile": {
           "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
@@ -1190,7 +1190,7 @@
           "lib/Xamarin.iOS10/ProgressRing.Forms.Plugin.iOS.dll": {}
         }
       },
-      "Xamarin.Essentials/1.7.3": {
+      "Xamarin.Essentials/1.7.5": {
         "type": "package",
         "dependencies": {
           "System.Numerics.Vectors": "4.5.0"
@@ -1211,7 +1211,7 @@
           }
         }
       },
-      "Xamarin.Forms/5.0.0.2515": {
+      "Xamarin.Forms/5.0.0.2578": {
         "type": "package",
         "compile": {
           "lib/Xamarin.iOS10/Xamarin.Forms.Core.dll": {
@@ -1354,11 +1354,11 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
-          "CsvHelper": "28.0.1",
-          "Microsoft.Bcl.AsyncInterfaces": "6.0.0",
+          "CsvHelper": "30.0.1",
+          "Microsoft.Bcl.AsyncInterfaces": "7.0.0",
           "Xam.Plugins.Forms.ProgressRing": "0.1.2",
-          "Xamarin.Essentials": "1.7.3",
-          "Xamarin.Forms": "5.0.0.2515",
+          "Xamarin.Essentials": "1.7.5",
+          "Xamarin.Forms": "5.0.0.2578",
           "sqlite-net-pcl": "1.8.116"
         },
         "compile": {
@@ -1371,15 +1371,15 @@
     }
   },
   "libraries": {
-    "CsvHelper/28.0.1": {
-      "sha512": "T/Eid0mP/GeWV1RcxmUPSsBCtOm6wHbFII6iFydPfpIa6cd+siec0KGrLq5uabI8sH6crFi84OA1vNLkp8Lzlw==",
+    "CsvHelper/30.0.1": {
+      "sha512": "rcZtgbWR+As4G3Vpgx0AMNmShGuQLFjkHAPIIflzrfkJCx8/AOd4m96ZRmiU1Wi39qS5UVjV0P8qdgqOo5Cwyg==",
       "type": "package",
-      "path": "csvhelper/28.0.1",
+      "path": "csvhelper/30.0.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
-        "csvhelper.28.0.1.nupkg.sha512",
+        "csvhelper.30.0.1.nupkg.sha512",
         "csvhelper.nuspec",
         "lib/net45/CsvHelper.dll",
         "lib/net45/CsvHelper.xml",
@@ -1395,23 +1395,25 @@
         "lib/netstandard2.1/CsvHelper.xml"
       ]
     },
-    "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
-      "sha512": "UcSjPsst+DfAdJGVDsu346FX0ci0ah+lw3WRtn18NUwEqRt70HaOQ7lI72vy3+1LxtqI3T5GWwV39rQSrCzAeg==",
+    "Microsoft.Bcl.AsyncInterfaces/7.0.0": {
+      "sha512": "3aeMZ1N0lJoSyzqiP03hqemtb1BijhsJADdobn/4nsMJ8V1H+CrpuduUe4hlRdx+ikBQju1VGjMD1GJ3Sk05Eg==",
       "type": "package",
-      "path": "microsoft.bcl.asyncinterfaces/6.0.0",
+      "path": "microsoft.bcl.asyncinterfaces/7.0.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
-        "lib/net461/Microsoft.Bcl.AsyncInterfaces.dll",
-        "lib/net461/Microsoft.Bcl.AsyncInterfaces.xml",
+        "buildTransitive/net461/Microsoft.Bcl.AsyncInterfaces.targets",
+        "buildTransitive/net462/_._",
+        "lib/net462/Microsoft.Bcl.AsyncInterfaces.dll",
+        "lib/net462/Microsoft.Bcl.AsyncInterfaces.xml",
         "lib/netstandard2.0/Microsoft.Bcl.AsyncInterfaces.dll",
         "lib/netstandard2.0/Microsoft.Bcl.AsyncInterfaces.xml",
         "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll",
         "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.xml",
-        "microsoft.bcl.asyncinterfaces.6.0.0.nupkg.sha512",
+        "microsoft.bcl.asyncinterfaces.7.0.0.nupkg.sha512",
         "microsoft.bcl.asyncinterfaces.nuspec",
         "useSharedDesignerContext.txt"
       ]
@@ -1666,10 +1668,10 @@
         "xam.plugins.forms.progressring.nuspec"
       ]
     },
-    "Xamarin.Essentials/1.7.3": {
-      "sha512": "b6NfxOfkmMGN54a4OcV/D7KXclWWqFwgixMPzlAku3kfKgUBGW4vBdNaujIBmk57NbGpWB2IS78ek0gDHNKwoQ==",
+    "Xamarin.Essentials/1.7.5": {
+      "sha512": "+dDLUCXOehBxFOw5D5AXeFtcLQ0HBCMeVHSSbonVuZWJ2/8mb7+pGFQA8n053Lvpie7CAd8C+05chIKK6YCBiw==",
       "type": "package",
-      "path": "xamarin.essentials/1.7.3",
+      "path": "xamarin.essentials/1.7.5",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1704,18 +1706,20 @@
         "lib/xamarinwatchos10/Xamarin.Essentials.pdb",
         "lib/xamarinwatchos10/Xamarin.Essentials.xml",
         "readme.txt",
-        "xamarin.essentials.1.7.3.nupkg.sha512",
+        "xamarin.essentials.1.7.5.nupkg.sha512",
         "xamarin.essentials.nuspec"
       ]
     },
-    "Xamarin.Forms/5.0.0.2515": {
-      "sha512": "n/Y/xk1idWRkxk7xItwvNwwda7CHpIk7JxD6tXkGXmTqiVGV1xRkepf5aKXFkQLM9KIQhXXYBxPsdyJysPpktw==",
+    "Xamarin.Forms/5.0.0.2578": {
+      "sha512": "cUjv81PVlNKqAYA9k8WV0JZiCxjuCLqpICfaumHeJvEBxo7qUrEIXHCyS9+tAAV1JL/qwzD/FnkdVy8gO9TWrA==",
       "type": "package",
-      "path": "xamarin.forms/5.0.0.2515",
+      "path": "xamarin.forms/5.0.0.2578",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Assets/xamarin_128x128.png",
+        "Licenses/LICENSE",
+        "Licenses/THIRD-PARTY-NOTICES.txt",
         "build/MonoAndroid10/proguard.cfg",
         "build/Xamarin.Forms.DefaultItems.props",
         "build/Xamarin.Forms.DefaultItems.targets",
@@ -1920,7 +1924,7 @@
         "lib/uap10.0.16299/Xamarin.Forms.Xaml.dll",
         "lib/uap10.0.16299/Xamarin.Forms.Xaml.pdb",
         "lib/uap10.0.16299/Xamarin.Forms.Xaml.xml",
-        "xamarin.forms.5.0.0.2515.nupkg.sha512",
+        "xamarin.forms.5.0.0.2578.nupkg.sha512",
         "xamarin.forms.nuspec"
       ]
     },
@@ -1932,11 +1936,11 @@
   },
   "projectFileDependencyGroups": {
     "Xamarin.iOS,Version=v1.0": [
-      "CsvHelper >= 28.0.1",
-      "Microsoft.Bcl.AsyncInterfaces >= 6.0.0",
+      "CsvHelper >= 30.0.1",
+      "Microsoft.Bcl.AsyncInterfaces >= 7.0.0",
       "Xam.Plugins.Forms.ProgressRing >= 0.1.2",
-      "Xamarin.Essentials >= 1.7.3",
-      "Xamarin.Forms >= 5.0.0.2515",
+      "Xamarin.Essentials >= 1.7.5",
+      "Xamarin.Forms >= 5.0.0.2578",
       "avilot >= 1.0.0",
       "sqlite-net-pcl >= 1.8.116"
     ]
@@ -1948,11 +1952,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\User\\Documents\\verzekdeasponnecofunguje\\avilot\\avilot.iOS\\avilot.iOS.csproj",
+      "projectUniqueName": "C:\\Users\\User\\Documents\\Lusifly\\avilot\\avilot.iOS\\avilot.iOS.csproj",
       "projectName": "avilot.iOS",
-      "projectPath": "C:\\Users\\User\\Documents\\verzekdeasponnecofunguje\\avilot\\avilot.iOS\\avilot.iOS.csproj",
+      "projectPath": "C:\\Users\\User\\Documents\\Lusifly\\avilot\\avilot.iOS\\avilot.iOS.csproj",
       "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\User\\Documents\\verzekdeasponnecofunguje\\avilot\\avilot.iOS\\obj\\",
+      "outputPath": "C:\\Users\\User\\Documents\\Lusifly\\avilot\\avilot.iOS\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "fallbackFolders": [
@@ -1973,8 +1977,8 @@
       "frameworks": {
         "xamarinios10": {
           "projectReferences": {
-            "C:\\Users\\User\\Documents\\verzekdeasponnecofunguje\\avilot\\avilot\\avilot.csproj": {
-              "projectPath": "C:\\Users\\User\\Documents\\verzekdeasponnecofunguje\\avilot\\avilot\\avilot.csproj"
+            "C:\\Users\\User\\Documents\\Lusifly\\avilot\\avilot\\avilot.csproj": {
+              "projectPath": "C:\\Users\\User\\Documents\\Lusifly\\avilot\\avilot\\avilot.csproj"
             }
           }
         }
@@ -1985,11 +1989,11 @@
         "dependencies": {
           "CsvHelper": {
             "target": "Package",
-            "version": "[28.0.1, )"
+            "version": "[30.0.1, )"
           },
           "Microsoft.Bcl.AsyncInterfaces": {
             "target": "Package",
-            "version": "[6.0.0, )"
+            "version": "[7.0.0, )"
           },
           "Xam.Plugins.Forms.ProgressRing": {
             "target": "Package",
@@ -1997,11 +2001,11 @@
           },
           "Xamarin.Essentials": {
             "target": "Package",
-            "version": "[1.7.3, )"
+            "version": "[1.7.5, )"
           },
           "Xamarin.Forms": {
             "target": "Package",
-            "version": "[5.0.0.2515, )"
+            "version": "[5.0.0.2578, )"
           },
           "sqlite-net-pcl": {
             "target": "Package",
