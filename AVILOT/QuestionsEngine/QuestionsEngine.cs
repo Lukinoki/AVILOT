@@ -199,7 +199,7 @@ namespace AVILOT.AVQuestionsEngine
         //getting questions - ALL
         public async virtual Task<Question[]> GetAllQuestions()
         {
-            var models = await database.GetCollectionsQuestions(Id);
+            var models = await database._GetCollectionsQuestions(Id).ToArrayAsync();
             return await QuestionsFromModels(models);
         }
         public virtual async IAsyncEnumerable<Question> IterateOverQuestionsAsync()
@@ -208,7 +208,7 @@ namespace AVILOT.AVQuestionsEngine
             var currentQuestionIndex = 0;
             while (currentQuestionIndex < questionCount)
             {
-                var questionModel = await database.GetCollectionsQuestionAtIndex(Id, currentQuestionIndex);
+                var questionModel = await database._GetQ(Id, currentQuestionIndex);
                 yield return await QuestionFromModel(questionModel);
                 currentQuestionIndex++;
             }
@@ -362,7 +362,7 @@ namespace AVILOT.AVQuestionsEngine
             var currentQuestionIndex = 0;
             while (currentQuestionIndex < questionCount)
             {
-                var questionModel = await database.GetQuestionAtIndex(currentQuestionIndex);
+                var questionModel = await database.QuestionTable.ElementAtAsync(currentQuestionIndex);
                 yield return await QuestionFromModel(questionModel);
                 currentQuestionIndex++;
             }

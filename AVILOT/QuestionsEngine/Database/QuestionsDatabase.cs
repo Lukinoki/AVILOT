@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+sing System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SQLite;
@@ -60,43 +61,63 @@ namespace AVILOT.AVQuestionsEngine.Database
         {
             return AnswerTable.ToArrayAsync();
         }
+
+        public AsyncTableQuery<CollectionModel> _GetCollections() => CollectionTable;
+        public AsyncTableQuery<CollectionModel> _GetCollections(int collectionId) => CollectionTable.Where(v => v.Id == collectionId);
+        public AsyncTableQuery<CollectionModel> _GetCollections(string collectionName) => CollectionTable.Where(v => v.Name == collectionName);
         //building collections
         public Task<CollectionModel[]> GetSubCollections(int CollectionId)
         {
             return CollectionTable.Where(v => v.ParentId == CollectionId).ToArrayAsync();
         }
+        public AsyncTableQuery<CollectionModel> _GetChildCollections(int parentCollectionId) => CollectionTable.Where(v => v.ParentId == parentCollectionId);
+
         public Task<QuestionModel[]> GetCollectionsQuestions(int CollectionId)
         {
             return QuestionTable.Where(v => v.Id.Equals(CollectionId)).ToArrayAsync();
         }
+
+        public AsyncTableQuery<QuestionModel> _GetCollectionsQuestions(int collectionId) => QuestionTable.Where(v => v.ParentCollectionId == collectionId);
         public async Task<QuestionModel[]> GetCollectionsQuestions(int[] CollectionIds)
         {
             var quer = String.Join(",", CollectionIds);
             var list = await db.QueryAsync<QuestionModel>($"SELECT * FROM QuestionModel WHERE ParentQuestionId IN ({quer})", CollectionIds);
             return list.ToArray();
         }
+        public AsyncTableQuery<QuestionModel> _GetCollectionsQuestions(int[] collectionIds) => QuestionTable.Where(v => collectionIds.Contains(v.ParentCollectionId));
+        
         public async Task<AnswerModel[]> GetQuestionsAnswers(int QuestionId)
         {
             var list = await db.QueryAsync<AnswerModel>($"SELECT * FROM AnswerModel WHERE ParentQuestionId = ? ORDER BY AnswerIndex ASC", QuestionId);
             return list.ToArray();
         }
+        public AsyncTableQuery<Answer> _GetQuestionsAnswers(int collectionId) => AnswerTable.Where(v => v.ParentQuestionId == collectionId);
         public Task<QuestionModel> GetQuestionAtIndex(int index)
         {
             return QuestionTable.ElementAtAsync(index);
         }
+        public AsyncTableQuery<Question> _GetQuestionAtIndex(int index) => QuestionTable.ElementAtAsync(index);
+
         public Task<QuestionModel> GetCollectionsQuestionAtIndex(int CollectionId, int index)
         {
             return QuestionTable.Where(v => v.Id.Equals(CollectionId)).ElementAtAsync(index);
         }
+        public AsyncTableQuery<Question> _GetQuestionAtIndex(AsyncTableQuery<Question> query,int index) => query.ElementAtAsync(index);
+
         
         public Task<List<QuestionModel>> GetQuestionsAtRange(int LimitIndex, int ResultsCount)
         {
             return db.QueryAsync<QuestionModel>($"SELECT * FROM QuestionModel ORDER BY Id ASC LIMIT ?, ?", LimitIndex, ResultsCount);
         }
+
+        public AsyncTableQuery<QuestionModel> _GetQuestionsAtRange(int limitIndex, int resultsCount) => _GetCollectionsQuestions().OrderBy(v => v.Id).Skip(limitIndex).Take(resultsCount);
         public Task<List<QuestionModel>> GetCollectionsQuestionsAtRange(int CollectionId, int LimitIndex, int ResultsCount)
         {
             return db.QueryAsync<QuestionModel>($"SELECT * FROM QuestionModel WHERE ParentCollectionId = ? ORDER BY Id ASC LIMIT ?, ?", CollectionId, LimitIndex, ResultsCount);
         }
+        public AsyncTableQuery<QuestionModel> _GetQuestionsAtRange(int limitIndex, int resultsCount, int collectionId) => _GetCollectionsQuestions(collectionId).OrderBy(v => v.Id).Skip(limitIndex).Take(resultsCount);
+        public AsyncTableQuery<QuestionModel> _GetQuestionsAtRange(int limitIndex, int resultsCount, int collectionIds[]) => _GetCollectionsQuestions(collectionIds).OrderBy(v => v.Id).Skip(limitIndex).Take(resultsCount);
+
         public async Task<QuestionModel[]> GetCollectionsQuestionsAtRange(int[] CollectionIds, int LimitIndex, int ResultsCount)
         {
             var quer = String.Join(",", CollectionIds);
@@ -107,11 +128,13 @@ namespace AVILOT.AVQuestionsEngine.Database
             }
             return list.ToArray();
         }
-        //get by Id
+        //get anything by Id
         public Task<CollectionModel> GetCollectionById(int CollectionId)
         {
             return CollectionTable.Where(v => v.Id.Equals(CollectionId)).FirstAsync();
         }
+        public AsyncTableQuery<CollectionModel> _GetQuestionsAtRange(int CollectionId) => _GetCollectionsQuestions(CollectionId).OrderBy(v => v.Id).Skip(limitIndex).Take(resultsCount);
+
         public Task<QuestionModel> GetQuestionById(int QuestionId)
         {
             return QuestionTable.Where(v => v.Id.Equals(QuestionId)).FirstAsync();
@@ -308,5 +331,7 @@ namespace AVILOT.AVQuestionsEngine.Database
             return QuestionTable.Where(v => v.ParentCollectionId.Equals(CollectionId) && v.AnsweredCorrectCount == 0 && v.AnsweredWrongCount == 0).ToArrayAsync();
         }
 
+        
     }
+
 }
