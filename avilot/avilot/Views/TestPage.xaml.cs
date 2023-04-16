@@ -1,6 +1,7 @@
 ﻿using avilot.AVQuestionsEngine;
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -12,26 +13,26 @@ namespace avilot.Views
     public partial class TestPage : ContentPage
     {
 
-        public static async Task<TestPage> CreateTestPageAsync(QuestionsCollection Collection, int id) {
-
-
+        public static async Task<TestPage> CreateTestPageAsync(QuestionsCollection Collection)
+        {
 
             var Questions = await Collection.GetAllQuestions();
+            Random random = new Random();
+            int QuestionId = random.Next(0,Questions.Length);
 
-            var Question = Questions[0];
-
+            var question = Questions[QuestionId];
             var QuestionCount = await Collection.GetQuestionCount();
             var AnsweredQuestionsCount = await Collection.GetAnsweredCount();
             var AnsweredCorrectCount = await Collection.GetAnsweredCorrectCount();
             var AnsweredWrongCount = await Collection.GetAnsweredWrongCount();
 
-            TestPage questionPage = new TestPage(Question, QuestionCount, AnsweredQuestionsCount, AnsweredCorrectCount, AnsweredWrongCount);
-            
+            TestPage questionPage = new TestPage(question, QuestionCount, AnsweredQuestionsCount, AnsweredCorrectCount, AnsweredWrongCount);
 
             return questionPage;
         }
-        
-        public TestPage(Question Question, int QuestionCount, int AnsweredQuestionsCount, int AnsweredCorrectCount, int AnsweredWrongCount) { 
+
+        public TestPage(Question Question, int QuestionCount, int AnsweredQuestionsCount, int AnsweredCorrectCount, int AnsweredWrongCount)
+        {
 
             InitializeComponent();
             question.Text = Question.Text;
@@ -39,56 +40,74 @@ namespace avilot.Views
             AnsweredCount.Text = AnsweredQuestionsCount.ToString();
             CorrectAnswers.Text = AnsweredCorrectCount.ToString();
             WrongAnswers.Text = AnsweredWrongCount.ToString();
-            
+
 
             // generate button for each answer
 
             for (var i = 0; i < Question.Answers.Count(); i++)
             {
-                var answer = new Button { Text = Question.Answers[i].Text, Margin = 5, BackgroundColor = Color.FromHex("#20FFFFFF"), CornerRadius = 15, FontFamily = "Inter", FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)) }; Answers.Children.Add(answer);
-    
-                //Question.Select(i);
+                int[] a = new int[] { i, Question.Id };
+                var answer = new Button
+                {
+                    Text = Question.Answers[i].Text,
+                    Margin = 5,
+                    BackgroundColor = Color.FromHex("#1FFFFFFF"),
+                    CornerRadius = 15,
+                    FontFamily = "Inter",
+                    FontSize = 22,
+                    BindingContext = (i, Question),
+                    TextTransform = TextTransform.None,
+                    Padding=10,
+                };
+                answer.Clicked += Answer;
+
+                Answers.Children.Add(answer);
 
 
-                if (i == Question.CorrectAnswerIndex)
-                {
-                    answer.Clicked += Correct;
-                }
-                else
-                {
-                    answer.Clicked += Wrong;
-                }
             }
         }
 
-        private void Wrong(object sender, EventArgs e)
-        {
-            var b = sender as Button;
-         
-            b.BackgroundColor = Color.Red;
-            b.BorderWidth = 3;
-            b.BorderColor = Color.Red;
-            //test.Opacity = 0.3;
+        private async void Answer(object sender, EventArgs e) {
+            Button answer = (Button)sender;
+            (int i, Question Question) = ((int, Question))answer.BindingContext;
+
+            if (i == Question.CorrectAnswerIndex)
+            {
+                await Question.Select(i);
+                answer.BackgroundColor = Color.FromHex("#1F00FF19");
+                answer.BorderWidth = 2;
+                answer.BorderColor = Color.FromHex("#9900FF19");
+
+            }
+            else
+            {
+                await Question.Select(i);
+                answer.BackgroundColor = Color.Red;
+            }
+
+
+            foreach (var child in ((answer).Parent as StackLayout).Children) { 
+                if (child is Button)
+                {
+                    Button button = (child as Button);
+                    button.IsEnabled = false;
+                    
+                }
+            }
+
+            await Task.Delay(2000);
+            await Navigation.PushAsync(await CreateTestPageAsync(Question.ParentCollection));
 
         }
 
-        private void Correct(object sender, EventArgs e)
+        private void Like(object sender, EventArgs e)
         {
-            var b = sender as Button;
 
-            b.BackgroundColor = Color.FromHex("#1F00FF19");
-            b.BorderWidth = 3;
-            b.BorderColor = Color.FromHex("#9900FF19");
-            
-        }
-
-        private void Like(object sender, EventArgs e) {
-            
         }
 
         private async void Back(object sender, EventArgs e)
         {
-            await Navigation.PopAsync();
+            await Navigation.PopToRootAsync();
         }
 
     }

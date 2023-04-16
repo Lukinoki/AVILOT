@@ -2959,6 +2959,11 @@ C:\Users\User\Documents\Lusifly\avilot\avilot.Android\obj\Debug\120\res\drawable
 C:\Users\User\Documents\Lusifly\avilot\avilot.Android\obj\Debug\120\res\drawable\region.png
 C:\Users\User\Documents\Lusifly\avilot\avilot.Android\obj\Debug\120\res\drawable\welcome.png
 C:\Users\User\Documents\Lusifly\avilot\avilot.Android\obj\Debug\120\res\drawable\ellipse.png
+C:\Users\User\Documents\Lusifly\avilot\avilot.Android\obj\Debug\120\res\drawable\slash.png
+C:\Users\User\Documents\Lusifly\avilot\avilot.Android\obj\Debug\120\res\drawable\vector2.png
+C:\Users\User\Documents\Lusifly\avilot\avilot.Android\obj\Debug\120\res\drawable\vector1.png
+C:\Users\User\Documents\Lusifly\avilot\avilot.Android\obj\Debug\120\res\drawable\delete.png
+C:\Users\User\Documents\Lusifly\avilot\avilot.Android\obj\Debug\120\res\drawable\settings.png
 C:\Users\User\Documents\Lusifly\avilot\avilot.Android\obj\Debug\120\uploadflags.txt
 C:\Users\User\Documents\Lusifly\avilot\avilot.Android\obj\Debug\120\resolvedassemblies.hash
 C:\Users\User\Documents\Lusifly\avilot\avilot.Android\obj\Debug\120\android\assets\avilot.Android.dll
@@ -3585,4 +3590,4 @@ C:\Users\User\Documents\Lusifly\avilot\avilot.Android\obj\Debug\120\stamp\_Conve
 C:\Users\User\Documents\Lusifly\avilot\avilot.Android\obj\Debug\120\stamp\_GenerateJavaStubs.stamp
 C:\Users\User\Documents\Lusifly\avilot\avilot.Android\obj\Debug\120\stamp\_GeneratePackageManagerJava.stamp
 C:\Users\User\Documents\Lusifly\avilot\avilot.Android\obj\Debug\120\stamp\_ResolveLibraryProjectImports.stamp
-C:\Users\User\Documents\Lusifly\avilot\avilot.Android\obj\Debug\120\res\drawable\slash.png
+C:\Users\User\Documents\Lusifly\avilot\avilot.Android\obj\Debug\120\res\drawable\airplane.png

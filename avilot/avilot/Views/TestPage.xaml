@@ -5,39 +5,42 @@
              x:DataType="ViewModels:TestBinding"
              NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
-        <StackLayout x:Name="test" Padding="10">
-            <StackLayout x:Name="header" Orientation="Horizontal" Margin="10">
-                <ImageButton Clicked="Back" Source="back"  BackgroundColor="Transparent" HorizontalOptions="Start" VerticalOptions="Center"></ImageButton>
-                <ImageButton Clicked="Like" Source="like" BackgroundColor="Transparent" HorizontalOptions="EndAndExpand" VerticalOptions="Center"></ImageButton>
+        <StackLayout x:Name="test" Padding="10,40,10,10">
+            <StackLayout Orientation="Horizontal">
+                <ImageButton Padding="15" Clicked="Back" Source="back"  BackgroundColor="Transparent" HorizontalOptions="Start" VerticalOptions="Center"></ImageButton>
+                <ImageButton Padding="15" Clicked="Like" Source="like" BackgroundColor="Transparent" HorizontalOptions="EndAndExpand" VerticalOptions="Center"></ImageButton>
             </StackLayout>
 
-            <Label x:Name="question" FontFamily="Inter" TextColor="White" FontAttributes="Bold" FontSize="36" Padding="0,30"></Label>
-
-            <StackLayout x:Name="Answers"></StackLayout>
+            <ScrollView HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Never" Orientation="Vertical">
+                <StackLayout>
+                    <Label x:Name="question" FontFamily="Inter" TextColor="White" FontAttributes="Bold" FontSize="30" Margin="10,20,10,40"></Label>
+                    <StackLayout x:Name="Answers"></StackLayout>
+                </StackLayout>
+            </ScrollView>
 
             <StackLayout x:Name="Footer" VerticalOptions="EndAndExpand" Orientation="Horizontal">
                 
                 <Frame BackgroundColor="#10FFFFFF" CornerRadius="15" Margin="5" HorizontalOptions="FillAndExpand">
                     <StackLayout VerticalOptions="Center">
                         <StackLayout Orientation="Horizontal">
-                            <Label HorizontalOptions="Start" FontSize="20" Text="Correct:"></Label>
-                            <Label HorizontalOptions="EndAndExpand" FontSize="20" x:Name="CorrectAnswers"></Label>
+                            <Label HorizontalOptions="Start" FontSize="22" Text="Correct:"></Label>
+                            <Label HorizontalOptions="EndAndExpand" TextColor="White" FontAttributes="Bold" FontSize="22" x:Name="CorrectAnswers"></Label>
                         </StackLayout>
                         <StackLayout Orientation="Horizontal">
-                            <Label HorizontalOptions="Start" FontSize="20" Text="Wrong:"></Label>
-                            <Label HorizontalOptions="EndAndExpand" FontSize="20" x:Name="WrongAnswers"></Label>
+                            <Label HorizontalOptions="Start" FontSize="22" Text="Wrong:"></Label>
+                            <Label HorizontalOptions="EndAndExpand" TextColor="White" FontAttributes="Bold" FontSize="22" x:Name="WrongAnswers"></Label>
                         </StackLayout>
                     </StackLayout>
                 </Frame>
 
                 <Frame BackgroundColor="#10FFFFFF" CornerRadius="15"  Margin="5">
                     <RelativeLayout BackgroundColor="Transparent">
-                        <StackLayout RelativeLayout.WidthConstraint="75" Margin="-10" BackgroundColor="Transparent">
-                            <Image Source="slash"></Image>
+                        <StackLayout RelativeLayout.WidthConstraint="70" Margin="-10" BackgroundColor="Transparent">
+                            <Image Source="slash" HeightRequest="80"></Image>
                         </StackLayout>
-                        <StackLayout RelativeLayout.WidthConstraint="75" BackgroundColor="Transparent">
-                            <Label HorizontalOptions="Start"  VerticalOptions="Start" FontSize="25" FontAttributes="Bold" x:Name="AnsweredCount"></Label>
-                            <Label HorizontalOptions="End" VerticalOptions="End" FontSize="25" FontAttributes="Bold" x:Name="AllCount"></Label>
+                        <StackLayout RelativeLayout.WidthConstraint="80" BackgroundColor="Transparent">
+                            <Label HorizontalOptions="Start" FontSize="25" FontAttributes="Bold" TextColor="White" x:Name="AnsweredCount"></Label>
+                            <Label HorizontalOptions="End" FontSize="25" FontAttributes="Bold" TextColor="White" x:Name="AllCount"></Label>
                         </StackLayout>
                     </RelativeLayout>
                 </Frame>

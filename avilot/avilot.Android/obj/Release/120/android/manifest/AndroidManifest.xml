@@ -16,9 +16,9 @@
       <action android:name="android.media.browse.MediaBrowserService" />
     </intent>
   </queries>
-  <application android:name="android.app.Application" android:allowBackup="true" android:appComponentFactory="androidx.core.app.CoreComponentFactory" android:extractNativeLibs="true" android:icon="@mipmap/logo" android:label="avilot.Android" android:theme="@style/MainTheme">
+  <application android:name="android.app.Application" android:allowBackup="true" android:appComponentFactory="androidx.core.app.CoreComponentFactory" android:extractNativeLibs="true" android:icon="@mipmap/logo" android:label="Avilot" android:supportsRtl="true" android:theme="@style/MainTheme">
     <activity android:name="crc64a0f0f34ff0c60fc3.MainActivity" android:configChanges="orientation|smallestScreenSize|screenLayout|screenSize|uiMode" android:icon="@mipmap/logo" android:label="lusifly" android:screenOrientation="locked" android:theme="@style/MainTheme" />
-    <activity android:name="crc64a0f0f34ff0c60fc3.SplashScreen" android:exported="true" android:noHistory="true" android:theme="@style/SplashTheme.Splash">
+    <activity android:name="crc64a0f0f34ff0c60fc3.SplashScreen" android:exported="true" android:noHistory="true" android:screenOrientation="locked" android:theme="@style/SplashTheme.Splash">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />

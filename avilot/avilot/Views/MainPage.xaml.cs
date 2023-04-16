@@ -8,6 +8,7 @@ using avilot.AVQuestionsEngine;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Xamarin.Forms.Xaml;
+using avilot.AVQuestionsEngine.Database;
 
 namespace avilot.Views
 {
@@ -16,54 +17,22 @@ namespace avilot.Views
         protected async override void OnAppearing()
         {
             base.OnAppearing();
-            if (Settings.FirstRun)
+
+            // calculate percentage of correct answers
+            //await QuestionsCollection.GetAnsweredCorrectPercentage();
+
+
+            var collections = await QuestionsEngine.GetAllColections();
+            for (int i = 0; i < collections.Count(); i++)
             {
-                // import question collections
-                var assembly = Assembly.GetExecutingAssembly();
-                var resourceName = "avilot.PLA.csv";
-                using var reader = new StreamReader(assembly.GetManifestResourceStream(resourceName));
-                await QuestionsEngine.ImportQuestionsFromCsv(reader, "Test1");
-
-                /*
-                var assembly2 = Assembly.GetExecutingAssembly();
-                var resourceName2 = "avilot.PLA2.csv";
-                using var reader2 = new StreamReader(assembly2.GetManifestResourceStream(resourceName2));
-                await QuestionsEngine.ImportQuestionsFromCsv(reader2, "Test2");
-
-                var assembly3 = Assembly.GetExecutingAssembly();
-                var resourceName3 = "avilot.PLA2.csv";
-                using var reader3 = new StreamReader(assembly3.GetManifestResourceStream(resourceName3));
-                await QuestionsEngine.ImportQuestionsFromCsv(reader3, "Test3");
-                */
-                /*
-                var assembly4 = Assembly.GetExecutingAssembly();
-                var resourceName4 = "avilot.PLA2.csv";
-                using var reader4 = new StreamReader(assembly4.GetManifestResourceStream(resourceName4));
-                var (questionModels, answerModels) = CsvUtils.LoadQuestionsFromCSV(reader); //Load question models from CSV
-                await QuestionsEngine.ImportQuestionsToDatabase("Test1", questionModels, answerModels);
-                var c1 = await QuestionsEngine.GetCollectionById(1);
-                */
-
-
-                // start initial dialog
-                await Navigation.PushAsync(new Welcome());
-                Settings.FirstRun = false;
-
-                // calculate percentage of correct answers
-                //await QuestionsCollection.GetAnsweredCorrectPercentage();
+                BindableLayout.SetItemsSource(AllCollections, collections);
             }
-            else
-            {
-                var collections = await QuestionsEngine.GetAllColections();
-                for (int i = 0; i < collections.Count(); i++)
-                {
-                    BindableLayout.SetItemsSource(AllCollections, collections);
-                }/*
-                // last started test
-                var LastTestedCollection = await QuestionsEngine.GetCollectionById(0);
-                continueLastTest.Text = LastTestedCollection.Name;
-                continueLastTestButton.BindingContext = LastTestedCollection.Id;*/
-            }
+
+            // last started test 
+            var LastTestedCollection = await QuestionsEngine.GetCollectionById(1);
+            continueLastTest.Text = LastTestedCollection.Name;
+            continueLastTestButton.BindingContext = LastTestedCollection.Id;
+
         }
 
         public MainPage()
@@ -78,11 +47,48 @@ namespace avilot.Views
             int id = (int)((Button)sender).BindingContext;
             var questionsCollection = await QuestionsEngine.GetCollectionById(id);
 
-            
-            await Navigation.PushAsync(await TestPage.CreateTestPageAsync(questionsCollection, id));
-            //await Navigation.PushAsync(await ResultPage.CreateTestPageAsync(questionsCollection));
+
+            await Navigation.PushAsync(await TestPage.CreateTestPageAsync(questionsCollection));
+            //await Navigation.PushAsync(await ResultPage.CreateResultPageAsync(questionsCollection));
             this.IsEnabled = true;
 
+        }
+
+        private async void Result(object sender, EventArgs e)
+        {
+            this.IsEnabled = false;
+            int id = (int)((Button)sender).BindingContext;
+            var questionsCollection = await QuestionsEngine.GetCollectionById(id);
+            await Navigation.PushAsync(await ResultPage.CreateResultPageAsync(questionsCollection));
+            this.IsEnabled = true;
+        }
+
+        private async void DeleteAnswers(object sender, EventArgs e) {
+
+        }
+
+        private async void ChangeDatabase(object sender, EventArgs e) {
+
+            Xamarin.Forms.ImageButton buttonImage = (Xamarin.Forms.ImageButton)sender;
+
+            if (ChangeDatabaseMenu.HeightRequest == 0)
+            {
+                buttonImage.Source = "vector3";
+
+                var databases = await QuestionsEngine.GetAllColections();
+
+                for (int i = 0; i < databases.Count(); i++)
+                {
+                    BindableLayout.SetItemsSource(AllDatabases, databases);
+                }
+
+                ChangeDatabaseMenu.HeightRequest = 180;
+            }
+            else
+            {
+                buttonImage.Source = "vector2";
+                ChangeDatabaseMenu.HeightRequest = 0;
+            }
         }
 
     }

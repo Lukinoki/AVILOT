@@ -3,23 +3,86 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="avilot.Views.ResultPage"
              Title="ResultPage"
-             NavigationPage.HasNavigationBar="False" >
-    <ContentPage.Content>
-        <StackLayout>
-            <Label 
-                x:Name="TestName"
-                HorizontalOptions="StartAndExpand"
-                VerticalOptions="Start"
-                FontSize="34"
-                TextColor="White"
-                FontFamily="Inter"
-                FontAttributes="Bold"
-                Padding="25"/>
-            
-            <BoxView Background="#1AFFFFFF" Opacity="0.2" HeightRequest="3" Margin="20,0,20,5"></BoxView>
+             NavigationPage.HasNavigationBar="False"
+             xmlns:converters="clr-namespace:avilot.ViewModels.Converters" >
 
-            <StackLayout x:Name="list"></StackLayout>
-            
-        </StackLayout>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:GetQuestionColor x:Key="GetQuestionColor" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+
+    <ContentPage.Content>
+        <ScrollView HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Never" Orientation="Vertical">
+            <StackLayout Padding="10">
+                <Label 
+                    x:Name="TestName"
+                    HorizontalOptions="StartAndExpand"
+                    VerticalOptions="Start"
+                    FontSize="34"
+                    TextColor="White"
+                    FontFamily="Inter"
+                    FontAttributes="Bold"
+                    Padding="20"/>
+
+                <BoxView Background="#FFFFFF" Opacity="0.15" HeightRequest="2" Margin="20,0,20,5"></BoxView>
+
+                <StackLayout x:Name="QuestionList">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Orientation="Horizontal" Padding="0,10">
+                                <ImageButton 
+                                    Source="vector1"
+                                    HorizontalOptions="Start"
+                                    VerticalOptions="StartAndExpand" 
+                                    Padding="10"
+                                    WidthRequest="50"
+                                    Clicked="ShowAnswers"
+                                    BackgroundColor="Transparent"
+                                    BindingContext="{Binding .}">
+                                </ImageButton>
+                                <StackLayout Orientation="Vertical">
+                                    <Label x:Name="QuestionText"
+                                           Text="{Binding Text}" 
+                                           TextColor="{Binding ., Converter={StaticResource GetQuestionColor}}" 
+                                           FontSize = "24" 
+                                           FontAttributes="Bold"
+                                           VerticalTextAlignment="Center"
+                                           VerticalOptions="CenterAndExpand"/>
+                                </StackLayout>
+                            </StackLayout>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </StackLayout>
+                
+                <BoxView Background="#FFFFFF" Opacity="0.15" HeightRequest="2" Margin="15"></BoxView>
+
+                <StackLayout x:Name="Footer" VerticalOptions="EndAndExpand" Orientation="Horizontal" >
+                    <Frame BackgroundColor="#10FFFFFF" CornerRadius="15" Margin="5" HorizontalOptions="FillAndExpand">
+                        <StackLayout VerticalOptions="Center">
+                            <StackLayout Orientation="Horizontal">
+                                <Label HorizontalOptions="Start" FontSize="22" Text="Correct:"></Label>
+                                <Label HorizontalOptions="EndAndExpand" TextColor="White" FontAttributes="Bold" FontSize="22" x:Name="CorrectAnswers"></Label>
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <Label HorizontalOptions="Start" FontSize="22" Text="Wrong:"></Label>
+                                <Label HorizontalOptions="EndAndExpand" TextColor="White" FontAttributes="Bold" FontSize="22" x:Name="WrongAnswers"></Label>
+                            </StackLayout>
+                        </StackLayout>
+                    </Frame>
+
+                    <Button Margin="5"  CornerRadius="15" Text="Go Back" FontSize="32" FontAttributes="Bold" Clicked="Back">
+                        <Button.Background>
+                            <LinearGradientBrush>
+                                <GradientStop Color="#00B4DB" Offset="0.1" />
+                                <GradientStop Color="#0083B0" Offset="1.0" />
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
+                </StackLayout>
+
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

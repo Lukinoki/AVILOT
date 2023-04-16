@@ -25,7 +25,8 @@ namespace avilot.Views
 
         private async void NavigateTo(object sender, EventArgs e)
         {
-            await Navigation.PopToRootAsync();
+            App.Current.MainPage = new NavigationPage(new MainPage());
+
         }
 
 

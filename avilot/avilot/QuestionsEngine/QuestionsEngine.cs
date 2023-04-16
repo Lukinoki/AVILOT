@@ -77,42 +77,6 @@ namespace avilot.AVQuestionsEngine
         }
 
 
-        // just test 
-
-        public static async Task<QuestionsCollection> ImportQuestionsToExistingDatabase(string CollectionName, Database.QuestionModel[] questionModels, Database.AnswerModel[][] answerModels)
-        {
-            var collectionModel = await GlobalQuestionsDatabase.GetCollectionByName(CollectionName); //create collection in db
-            //set correct parentCollectionId for each question
-            var collectionId = collectionModel.Id;
-            foreach (var questionModel in questionModels)
-            {
-                Debug.Write(questionModels.Length);
-                questionModel.ParentCollectionId = collectionId;
-            }
-            var questionModelsWithIds = await GlobalQuestionsDatabase.CreateQuestions(questionModels); //create questions id db
-            //set correct answers parentQuestionIds
-            var answersCount = answerModels.Length * answerModels[0].Length;
-            var readyAnswersIndex = 0;
-            var readyAnswerModels = new Database.AnswerModel[answersCount]; //this is here just to flatten the array
-            for (int i = 0; i < questionModelsWithIds.Length; i++)
-            {
-                var questionModelId = questionModelsWithIds[i].Id; //get id of parent question
-                var answerModelz = answerModels[i]; // get answer models asigned to the question
-                foreach (var answerModel in answerModelz)
-                {
-                    answerModel.ParentQuestionId = questionModelId;
-                    //add answerModel to readyAnswerModels
-                    readyAnswerModels[readyAnswersIndex] = answerModel;
-                    readyAnswersIndex++;
-                }
-            }
-            await GlobalQuestionsDatabase.CreateAnswers(readyAnswerModels);
-            return await GetCollectionById(collectionId);
-        }
-
-
-
-
     }
     public class Answer : Database.AnswerModel
     {

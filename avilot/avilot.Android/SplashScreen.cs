@@ -13,7 +13,8 @@ using System.Threading.Tasks;
 
 namespace avilot.Droid
 {
-    [Activity(Theme = "@style/SplashTheme.Splash",
+    [Activity(ScreenOrientation = Android.Content.PM.ScreenOrientation.Locked,
+        Theme = "@style/SplashTheme.Splash",
         MainLauncher = true,
         NoHistory = true)]
     public class SplashScreen : Activity

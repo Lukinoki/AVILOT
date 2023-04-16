@@ -11,9 +11,9 @@
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
   <uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-  <application android:label="avilot.Android" android:theme="@style/MainTheme" android:icon="@mipmap/logo" android:name="android.app.Application" android:allowBackup="true" android:extractNativeLibs="true">
+  <application android:supportsRtl="true" android:label="Avilot" android:theme="@style/MainTheme" android:icon="@mipmap/logo" android:name="android.app.Application" android:allowBackup="true" android:extractNativeLibs="true">
     <activity android:configChanges="orientation|smallestScreenSize|screenLayout|screenSize|uiMode" android:icon="@mipmap/logo" android:label="lusifly" android:screenOrientation="locked" android:theme="@style/MainTheme" android:name="crc64a0f0f34ff0c60fc3.MainActivity" />
-    <activity android:noHistory="true" android:theme="@style/SplashTheme.Splash" android:name="crc64a0f0f34ff0c60fc3.SplashScreen" android:exported="true">
+    <activity android:noHistory="true" android:screenOrientation="locked" android:theme="@style/SplashTheme.Splash" android:name="crc64a0f0f34ff0c60fc3.SplashScreen" android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />

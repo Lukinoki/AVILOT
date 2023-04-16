@@ -10,8 +10,8 @@
 
             <Style  TargetType="ContentPage" ApplyToDerivedTypes="True">
                 <Setter Property="Background">
-                    <LinearGradientBrush>
-                        <GradientStop 
+                    <LinearGradientBrush EndPoint="0,1">
+                        <GradientStop
                             Color="#003461"
                             Offset="0.1" />
                         <GradientStop 
