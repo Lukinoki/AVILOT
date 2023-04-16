@@ -3591,3 +3591,9 @@ C:\Users\User\Documents\Lusifly\avilot\avilot.Android\obj\Debug\120\stamp\_Gener
 C:\Users\User\Documents\Lusifly\avilot\avilot.Android\obj\Debug\120\stamp\_GeneratePackageManagerJava.stamp
 C:\Users\User\Documents\Lusifly\avilot\avilot.Android\obj\Debug\120\stamp\_ResolveLibraryProjectImports.stamp
 C:\Users\User\Documents\Lusifly\avilot\avilot.Android\obj\Debug\120\res\drawable\airplane.png
+C:\Users\User\Documents\Lusifly\avilot\avilot.Android\obj\Debug\120\res\drawable\vector3.png
+C:\Users\User\Documents\Lusifly\avilot\avilot.Android\obj\Debug\120\android\src\mono\JavaInteropTypeManager.java
+C:\Users\User\Documents\Lusifly\avilot\avilot.Android\obj\Debug\120\android\marshal_methods.arm64-v8a.o
+C:\Users\User\Documents\Lusifly\avilot\avilot.Android\obj\Debug\120\android\marshal_methods.armeabi-v7a.o
+C:\Users\User\Documents\Lusifly\avilot\avilot.Android\obj\Debug\120\android\marshal_methods.x86.o
+C:\Users\User\Documents\Lusifly\avilot\avilot.Android\obj\Debug\120\android\marshal_methods.x86_64.o

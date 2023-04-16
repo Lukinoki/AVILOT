@@ -1,8 +1,8 @@
+C:\Users\User\Documents\Lusifly\avilot\avilot\obj\Debug\netstandard2.0\avilot.csproj.AssemblyReference.cache
+C:\Users\User\Documents\Lusifly\avilot\avilot\obj\Debug\netstandard2.0\avilot.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\User\Documents\Lusifly\avilot\avilot\bin\Debug\netstandard2.0\avilot.deps.json
 C:\Users\User\Documents\Lusifly\avilot\avilot\bin\Debug\netstandard2.0\avilot.dll
 C:\Users\User\Documents\Lusifly\avilot\avilot\bin\Debug\netstandard2.0\avilot.pdb
-C:\Users\User\Documents\Lusifly\avilot\avilot\obj\Debug\netstandard2.0\avilot.csproj.AssemblyReference.cache
-C:\Users\User\Documents\Lusifly\avilot\avilot\obj\Debug\netstandard2.0\avilot.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\User\Documents\Lusifly\avilot\avilot\obj\Debug\netstandard2.0\App.xaml.g.cs
 C:\Users\User\Documents\Lusifly\avilot\avilot\obj\Debug\netstandard2.0\Views\ItemDetailPage.xaml.g.cs
 C:\Users\User\Documents\Lusifly\avilot\avilot\obj\Debug\netstandard2.0\Views\MainPage.xaml.g.cs

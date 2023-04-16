@@ -9933,7 +9933,8 @@ public final class R {
     public static final int tooltip_frame_light=0x7f07009e;
     public static final int vector1=0x7f07009f;
     public static final int vector2=0x7f0700a0;
-    public static final int welcome=0x7f0700a1;
+    public static final int vector3=0x7f0700a1;
+    public static final int welcome=0x7f0700a2;
   }
   public static final class id {
     public static final int ALT=0x7f080000;

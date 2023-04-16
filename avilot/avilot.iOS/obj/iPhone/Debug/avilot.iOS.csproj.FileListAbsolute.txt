@@ -161,3 +161,16 @@ C:\Users\User\Documents\verzekdeasponnecofunguje\avilot\avilot.iOS\obj\iPhone\De
 C:\Users\User\Documents\verzekdeasponnecofunguje\avilot\avilot.iOS\obj\iPhone\Debug\avilot.iOS.csproj.CopyComplete
 C:\Users\User\Documents\verzekdeasponnecofunguje\avilot\avilot.iOS\obj\iPhone\Debug\avilot.iOS.exe
 C:\Users\User\Documents\verzekdeasponnecofunguje\avilot\avilot.iOS\obj\iPhone\Debug\avilot.iOS.pdb
+C:\Users\User\Documents\Lusifly\avilot\avilot.iOS\obj\iPhone\Debug\actool\_PartialAppManifest.items
+C:\Users\User\Documents\Lusifly\avilot\avilot.iOS\obj\iPhone\Debug\actool\_BundleResourceWithLogicalName.items
+C:\Users\User\Documents\Lusifly\avilot\avilot.iOS\obj\iPhone\Debug\actool\_ProcessedImageAssetsPath.items
+C:\Users\User\Documents\Lusifly\avilot\avilot.iOS\obj\iPhone\Debug\ibtool\_BundleResourceWithLogicalName.items
+C:\Users\User\Documents\Lusifly\avilot\avilot.iOS\obj\iPhone\Debug\ibtool\_ProcessedInterfaceDefinitionsPath.items
+C:\Users\User\Documents\Lusifly\avilot\avilot.iOS\obj\iPhone\Debug\coremlc\_PartialAppManifest.items
+C:\Users\User\Documents\Lusifly\avilot\avilot.iOS\obj\iPhone\Debug\coremlc\_BundleResourceWithLogicalName.items
+C:\Users\User\Documents\Lusifly\avilot\avilot.iOS\obj\iPhone\Debug\coremlc\_ProcessedCoreMLModelsPath.items
+C:\Users\User\Documents\Lusifly\avilot\avilot.iOS\obj\iPhone\Debug\_ProcessedBundleResourcesPath.items
+C:\Users\User\Documents\Lusifly\avilot\avilot.iOS\obj\iPhone\Debug\_ProcessedContentPath.items
+C:\Users\User\Documents\Lusifly\avilot\avilot.iOS\obj\iPhone\Debug\optimized\
+C:\Users\User\Documents\Lusifly\avilot\avilot.iOS\obj\iPhone\Debug\avilot.iOS.csproj.AssemblyReference.cache
+C:\Users\User\Documents\Lusifly\avilot\avilot.iOS\obj\iPhone\Debug\avilot.iOS.csproj.CoreCompileInputs.cache

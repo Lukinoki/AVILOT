@@ -73,21 +73,19 @@ namespace avilot.Views
 
             if (ChangeDatabaseMenu.HeightRequest == 0)
             {
-                buttonImage.Source = "vector3";
-
                 var databases = await QuestionsEngine.GetAllColections();
 
                 for (int i = 0; i < databases.Count(); i++)
                 {
                     BindableLayout.SetItemsSource(AllDatabases, databases);
                 }
-
                 ChangeDatabaseMenu.HeightRequest = 180;
+                buttonImage.Source = "vector3";
             }
             else
             {
-                buttonImage.Source = "vector2";
                 ChangeDatabaseMenu.HeightRequest = 0;
+                buttonImage.Source = "vector2";
             }
         }
 

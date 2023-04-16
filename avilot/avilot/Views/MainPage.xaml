@@ -209,7 +209,7 @@
             </ScrollView>
 
             <BoxView Background="#FFFFFF" Opacity="0.15" HeightRequest="2" Margin="30,2"></BoxView>
-            
+
             <StackLayout Orientation="Horizontal" HeightRequest="85" Padding="10">
                 <ImageButton
                     BackgroundColor="#0FFFFFFF"
@@ -232,5 +232,5 @@
             </StackLayout>
 
         </StackLayout>
-    </ScrollView>   
+    </ScrollView>
 </ContentPage>
