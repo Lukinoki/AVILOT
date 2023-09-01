@@ -102,12 +102,23 @@ namespace avilot.Views
 
         private void Like(object sender, EventArgs e)
         {
-
+            Debug.Write("TODO: like");
         }
 
-        private async void Back(object sender, EventArgs e)
+         async void Back() 
         {
             await Navigation.PopToRootAsync();
+        }
+        // on page back button
+        private void GoBack(object sender, EventArgs e)
+        {
+            Back();
+        }
+        // system back button
+        protected override bool OnBackButtonPressed()
+        {
+            Back();
+            return true;
         }
 
     }

@@ -3912,11 +3912,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\User\\Documents\\Lusifly\\avilot\\avilot.Android\\avilot.Android.csproj",
+      "projectUniqueName": "C:\\Users\\User\\Downloads\\Lusifly-master\\Lusifly-master\\avilot\\avilot.Android\\avilot.Android.csproj",
       "projectName": "avilot.Android",
-      "projectPath": "C:\\Users\\User\\Documents\\Lusifly\\avilot\\avilot.Android\\avilot.Android.csproj",
+      "projectPath": "C:\\Users\\User\\Downloads\\Lusifly-master\\Lusifly-master\\avilot\\avilot.Android\\avilot.Android.csproj",
       "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\User\\Documents\\Lusifly\\avilot\\avilot.Android\\obj\\",
+      "outputPath": "C:\\Users\\User\\Downloads\\Lusifly-master\\Lusifly-master\\avilot\\avilot.Android\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "fallbackFolders": [
@@ -3937,8 +3937,8 @@
       "frameworks": {
         "monoandroid12.0": {
           "projectReferences": {
-            "C:\\Users\\User\\Documents\\Lusifly\\avilot\\avilot\\avilot.csproj": {
-              "projectPath": "C:\\Users\\User\\Documents\\Lusifly\\avilot\\avilot\\avilot.csproj"
+            "C:\\Users\\User\\Downloads\\Lusifly-master\\Lusifly-master\\avilot\\avilot\\avilot.csproj": {
+              "projectPath": "C:\\Users\\User\\Downloads\\Lusifly-master\\Lusifly-master\\avilot\\avilot\\avilot.csproj"
             }
           }
         }

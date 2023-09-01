@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Xamarin.Forms.Xaml;
 using avilot.AVQuestionsEngine.Database;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace avilot.Views
 {
@@ -18,10 +19,7 @@ namespace avilot.Views
         {
             base.OnAppearing();
 
-            // calculate percentage of correct answers
-            //await QuestionsCollection.GetAnsweredCorrectPercentage();
-
-
+            // change airplane type
             var collections = await QuestionsEngine.GetAllColections();
             for (int i = 0; i < collections.Count(); i++)
             {
@@ -32,7 +30,13 @@ namespace avilot.Views
             var LastTestedCollection = await QuestionsEngine.GetCollectionById(1);
             continueLastTest.Text = LastTestedCollection.Name;
             continueLastTestButton.BindingContext = LastTestedCollection.Id;
-
+            // progress
+            // calculate percentage of correct answers
+            // await QuestionsCollection.GetAnsweredCorrectPercentage();
+            progress.Text = 68.ToString();
+            progressBar.Progress = 0.68;
+            // streak
+            streak.Text = 12.ToString();
         }
 
         public MainPage()
@@ -41,20 +45,18 @@ namespace avilot.Views
         }
 
 
-        private async void NavigateTo(object sender, EventArgs e)
+        private async void NavigateToTestPage(object sender, EventArgs e)
         {
             this.IsEnabled = false;
             int id = (int)((Button)sender).BindingContext;
             var questionsCollection = await QuestionsEngine.GetCollectionById(id);
 
-
             await Navigation.PushAsync(await TestPage.CreateTestPageAsync(questionsCollection));
-            //await Navigation.PushAsync(await ResultPage.CreateResultPageAsync(questionsCollection));
             this.IsEnabled = true;
 
         }
 
-        private async void Result(object sender, EventArgs e)
+        private async void NavigateToResultPage(object sender, EventArgs e)
         {
             this.IsEnabled = false;
             int id = (int)((Button)sender).BindingContext;
@@ -63,11 +65,13 @@ namespace avilot.Views
             this.IsEnabled = true;
         }
 
-        private async void DeleteAnswers(object sender, EventArgs e) {
-
+        private void DeleteAnswers(object sender, EventArgs e)
+        {
+            Debug.WriteLine("TODO: delete wrong answers");
         }
 
-        private async void ChangeDatabase(object sender, EventArgs e) {
+        private async void ChangeType(object sender, EventArgs e)
+        {
 
             Xamarin.Forms.ImageButton buttonImage = (Xamarin.Forms.ImageButton)sender;
 
