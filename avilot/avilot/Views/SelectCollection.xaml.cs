@@ -23,7 +23,7 @@ namespace avilot.Views
             return true;
         }
 
-        private async void NavigateTo(object sender, EventArgs e)
+        private void NavigateTo(object sender, EventArgs e)
         {
             App.Current.MainPage = new NavigationPage(new MainPage());
 
