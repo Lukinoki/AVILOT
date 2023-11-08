@@ -72,7 +72,7 @@
                         </StackLayout>
                     </Frame>
 
-                    <Button Margin="5"  CornerRadius="15" Text="Go Back" FontSize="32" FontAttributes="Bold" Clicked="Back">
+                    <Button Margin="5" CornerRadius="15" Text="Go Back" FontSize="28" FontAttributes="Bold" Clicked="Back" Padding="10">
                         <Button.Background>
                             <LinearGradientBrush>
                                 <GradientStop Color="#00B4DB" Offset="0.1" />

@@ -7,8 +7,9 @@
     -->
     <Application.Resources>
         <ResourceDictionary>
+            <Color x:Key="White">white</Color>
 
-            <Style  TargetType="ContentPage" ApplyToDerivedTypes="True">
+            <Style TargetType="ContentPage" ApplyToDerivedTypes="True">
                 <Setter Property="Background">
                     <LinearGradientBrush EndPoint="0,1">
                         <GradientStop
@@ -20,6 +21,15 @@
                     </LinearGradientBrush>
                 </Setter>
             </Style>
+
+            <Style TargetType="Label" ApplyToDerivedTypes="True">
+                <Setter Property="TextColor" Value="{StaticResource White}"/>
+            </Style>
+
+            <Style TargetType="Button" ApplyToDerivedTypes="True">
+                <Setter Property="TextColor" Value="{StaticResource White}"/>
+            </Style>
+            
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -91,7 +91,7 @@ namespace avilot.Views
                 {
                     Button button = (child as Button);
                     button.IsEnabled = false;
-                    
+
                 }
             }
 
