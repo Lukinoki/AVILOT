@@ -2294,11 +2294,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\User\\Downloads\\Lusifly-master\\Lusifly-master\\avilot\\avilot.iOS\\avilot.iOS.csproj",
+      "projectUniqueName": "C:\\Users\\User\\Documents\\Lusifly-master\\Lusifly-master\\avilot\\avilot.iOS\\avilot.iOS.csproj",
       "projectName": "avilot.iOS",
-      "projectPath": "C:\\Users\\User\\Downloads\\Lusifly-master\\Lusifly-master\\avilot\\avilot.iOS\\avilot.iOS.csproj",
+      "projectPath": "C:\\Users\\User\\Documents\\Lusifly-master\\Lusifly-master\\avilot\\avilot.iOS\\avilot.iOS.csproj",
       "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\User\\Downloads\\Lusifly-master\\Lusifly-master\\avilot\\avilot.iOS\\obj\\",
+      "outputPath": "C:\\Users\\User\\Documents\\Lusifly-master\\Lusifly-master\\avilot\\avilot.iOS\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "fallbackFolders": [
@@ -2319,8 +2319,8 @@
       "frameworks": {
         "xamarinios10": {
           "projectReferences": {
-            "C:\\Users\\User\\Downloads\\Lusifly-master\\Lusifly-master\\avilot\\avilot\\avilot.csproj": {
-              "projectPath": "C:\\Users\\User\\Downloads\\Lusifly-master\\Lusifly-master\\avilot\\avilot\\avilot.csproj"
+            "C:\\Users\\User\\Documents\\Lusifly-master\\Lusifly-master\\avilot\\avilot\\avilot.csproj": {
+              "projectPath": "C:\\Users\\User\\Documents\\Lusifly-master\\Lusifly-master\\avilot\\avilot\\avilot.csproj"
             }
           }
         }

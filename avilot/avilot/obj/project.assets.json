@@ -3082,11 +3082,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\User\\Downloads\\Lusifly-master\\Lusifly-master\\avilot\\avilot\\avilot.csproj",
+      "projectUniqueName": "C:\\Users\\User\\Documents\\Lusifly-master\\Lusifly-master\\avilot\\avilot\\avilot.csproj",
       "projectName": "avilot",
-      "projectPath": "C:\\Users\\User\\Downloads\\Lusifly-master\\Lusifly-master\\avilot\\avilot\\avilot.csproj",
+      "projectPath": "C:\\Users\\User\\Documents\\Lusifly-master\\Lusifly-master\\avilot\\avilot\\avilot.csproj",
       "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\User\\Downloads\\Lusifly-master\\Lusifly-master\\avilot\\avilot\\obj\\",
+      "outputPath": "C:\\Users\\User\\Documents\\Lusifly-master\\Lusifly-master\\avilot\\avilot\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
