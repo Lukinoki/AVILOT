@@ -15,19 +15,21 @@ namespace AVILOT.ViewModels
 {
     public class DatasetImportViewModel : BaseViewModel
     {
-        
+        public QuestionsCollection[] questionsCollections { get; }
         public Command ImportNewCommand { get; }
         public Command PrintCollection { get; }
         public Command DeleteDatabaseCommand { get; }
 
         public Command AnswerQuestionCommand { get; }
-        
+
         public Command PrintAllCollections { get; }
 
         public Command PrintPages { get; }
         public string ImportStatus { get; set; }
         public DatasetImportViewModel()
         {
+
+            questionsCollections = QuestionsEngine.GetAllColections().Result;
             ImportNewCommand = new Command(ImportNewCollection);
             DeleteDatabaseCommand = new Command(async () =>
             {
@@ -70,7 +72,7 @@ namespace AVILOT.ViewModels
                 }
                 Console.WriteLine(await collection.GetAnsweredCorrectCount());
                 Console.WriteLine(await collection.GetAnsweredCorrectPercentage());
-                
+
             });
             PrintPages = new Command(async () =>
             {
@@ -114,9 +116,9 @@ namespace AVILOT.ViewModels
                     await QuestionsEngine.ImportQuestionsFromCsv(stream, pickResult.FileName);
                     Console.WriteLine("Loaded");
                 }
-                
+
             }
-            
+
         }
 
     }

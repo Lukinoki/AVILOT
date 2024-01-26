@@ -9,7 +9,7 @@ namespace AVILOT.AVQuestionsEngine.Database
 {
     public class QuestionsDatabase
     {
-        private readonly SQLiteAsyncConnection db;
+        public readonly SQLiteAsyncConnection db;
         public readonly AsyncTableQuery<CollectionModel> CollectionTable;
         public readonly AsyncTableQuery<QuestionModel> QuestionTable;
         public readonly AsyncTableQuery<AnswerModel> AnswerTable;
@@ -48,7 +48,7 @@ namespace AVILOT.AVQuestionsEngine.Database
         }
         public Task<int> GetQuestionsCount(int collectionId)
         {
-            return QuestionTable.CountAsync(v => v.Id.Equals(collectionId));
+            return QuestionTable.CountAsync(v => v.ParentCollectionId.Equals(collectionId));
         }
         //get all
         public Task<CollectionModel[]> GetCollections()
@@ -66,7 +66,7 @@ namespace AVILOT.AVQuestionsEngine.Database
         //building collections
         public Task<QuestionModel[]> GetCollectionsQuestions(int CollectionId)
         {
-            return QuestionTable.Where(v => v.Id.Equals(CollectionId)).ToArrayAsync();
+            return QuestionTable.Where(v => v.ParentCollectionId.Equals(CollectionId)).ToArrayAsync();
         }
         public Task<AnswerModel[]> GetQuestionsAnswers(int QuestionId)
         {
@@ -78,7 +78,7 @@ namespace AVILOT.AVQuestionsEngine.Database
         }
         public Task<QuestionModel> GetCollectionsQuestionAtIndex(int CollectionId, int index)
         {
-            return QuestionTable.Where(v => v.Id.Equals(CollectionId)).ElementAtAsync(index);
+            return QuestionTable.Where(v => v.ParentCollectionId.Equals(CollectionId)).ElementAtAsync(index);
         }
         public Task<List<QuestionModel>> GetQuestionsAtRange(int LimitIndex, int ResultsCount)
         {

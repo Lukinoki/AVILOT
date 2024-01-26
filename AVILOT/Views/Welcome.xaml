@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AVILOT.Views.Welcome"
+             NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.Content>
+        <StackLayout>
+
+            <StackLayout Padding="40" VerticalOptions="Center">
+                <Label Text="Welcome to" HorizontalOptions="Center" Margin="0,40,0,0" FontSize="20" TextColor="White"></Label>
+                <Label Text="Lusifly" HorizontalOptions="Center" FontSize="70" FontAttributes="Bold" TextColor="White"></Label>
+                <Image Source="welcome.png" VerticalOptions="Center" Margin="0,80,0,50"></Image>
+                <Label Text="Lets learn how to fly together" HorizontalOptions="Center" HorizontalTextAlignment="Center" FontSize="18" TextColor="White"></Label>
+
+            </StackLayout>
+
+
+            <StackLayout VerticalOptions="EndAndExpand">
+
+                <Button HorizontalOptions="End" Margin="0,0,40,40" WidthRequest="125" FontSize="20" FontAttributes="Bold" Text="Next" Clicked="NavigateTo">
+                    <Button.Background>
+                        <LinearGradientBrush EndPoint="1,0">
+                            <GradientStop Color="#0083B0" Offset="0.1" />
+                            <GradientStop Color="#00B4DB" Offset="1.0" />
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+
+            </StackLayout>
+
+
+            <StackLayout Orientation="Horizontal" HeightRequest="6" HorizontalOptions="Center" Margin="0, 0, 0, 60">
+
+
+
+                <Frame WidthRequest="90" Margin="5, 0" CornerRadius="30">
+                    <Frame.Background>
+                        <LinearGradientBrush>
+                            <GradientStop Color="#00B4DB" Offset="0.1" />
+                            <GradientStop Color="#0083B0" Offset="1.0" />
+                        </LinearGradientBrush>
+                    </Frame.Background>
+
+                </Frame>
+
+
+                <Frame Opacity="0.5" WidthRequest="30" Margin="5, 0" CornerRadius="30">
+                    <Frame.Background>
+                        <LinearGradientBrush>
+                            <GradientStop Color="#00B4DB" Offset="0.1" />
+                            <GradientStop Color="#0083B0" Offset="1.0" />
+                        </LinearGradientBrush>
+                    </Frame.Background>
+
+                </Frame>
+
+
+                <Frame Opacity="0.5" WidthRequest="30" Margin="5, 0" CornerRadius="30">
+                    <Frame.Background>
+                        <LinearGradientBrush>
+                            <GradientStop Color="#00B4DB" Offset="0.1" />
+                            <GradientStop Color="#0083B0" Offset="1.0" />
+                        </LinearGradientBrush>
+                    </Frame.Background>
+
+                </Frame>
+
+            </StackLayout>
+
+
+
+        </StackLayout>
+
+    </ContentPage.Content>
+    
+</ContentPage>
