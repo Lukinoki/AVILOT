@@ -8,8 +8,9 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Essentials;
 using System.IO;
-using AVILOT.AVQuestionsEngine;
+using AVILOT.QEngine2;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace AVILOT.ViewModels
 {
@@ -33,18 +34,18 @@ namespace AVILOT.ViewModels
             ImportNewCommand = new Command(ImportNewCollection);
             DeleteDatabaseCommand = new Command(async () =>
             {
-                await QuestionsEngine.GlobalQuestionsDatabase.ClearDatabase();
+                await Engine.engine.clearDatabase();
             });
             PrintCollection = new Command(async () =>
             {
                 Console.WriteLine("STARTING PRINT");
                 //var collections = await QuestionsEngine.QuestionsEngine.getAllColections();
-                var collection = QuestionsEngine.allQuestionsCollection;
-                var allQuestions = await collection.GetAllQuestions();
-                foreach (var question in allQuestions)
+                var categories = await Engine.engine.GetCategories();
+                var collections = categories[0].SubCollections.ToList();
+                var thecollection = collections[0];
+                foreach (var question in thecollection.Questions)
                 {
                     Console.WriteLine($"{question.Text} Id: {question.Id}");
-                    Console.WriteLine($"correct: {question.AnsweredCorrectCount} wrong: {question.AnsweredWrongCount} lastcorrect: {question.LastCorrectAnswer} lastwrong: {question.LastWrongAnswer}");
                     foreach (var answer in question.Answers)
                     {
                         Console.WriteLine($"ANS: {answer.Text}");
@@ -53,16 +54,20 @@ namespace AVILOT.ViewModels
             });
             PrintAllCollections = new Command(async () =>
             {
-                var collections = await QuestionsEngine.GetAllColections();
-                foreach (var collection in collections)
+                var categories = await Engine.engine.GetCategories();
+                foreach (var category in categories)
                 {
-                    Console.WriteLine($"Name: {collection.Name} Id: {collection.Id}");
+                    Console.WriteLine($"CATEGORY: {category.Name} Id: {category.Id}");
+                    foreach (var collection in category.SubCollections)
+                    {
+                        Console.WriteLine($"Col: {collection.Name} Id: {collection.Id}"); 
+                    }
                 }
 
             });
             AnswerQuestionCommand = new Command(async () =>
             {
-                var collections = await QuestionsEngine.GetAllColections();
+                /*var collections = await QuestionsEngine.GetAllColections();
                 var collection = collections[0];
                 for (int i = 0; i < 10; i++)
                 {
@@ -71,28 +76,8 @@ namespace AVILOT.ViewModels
                     await question.Select(question.CorrectAnswerIndex);
                 }
                 Console.WriteLine(await collection.GetAnsweredCorrectCount());
-                Console.WriteLine(await collection.GetAnsweredCorrectPercentage());
+                Console.WriteLine(await collection.GetAnsweredCorrectPercentage());*/
                 
-            });
-            PrintPages = new Command(async () =>
-            {
-                Console.WriteLine("STARTING PRINT");
-                //var collections = await QuestionsEngine.QuestionsEngine.getAllColections();
-                var collection = QuestionsEngine.allQuestionsCollection;
-                var allQuestions = collection.IterateOverQuestionPagesAsync(10);
-                await foreach (var page in allQuestions)
-                {
-                    Console.WriteLine("new page");
-                    foreach(var question in page)
-                    {
-                        Console.WriteLine($"{question.Text} Id: {question.Id}");
-                        Console.WriteLine($"correct: {question.AnsweredCorrectCount} wrong: {question.AnsweredWrongCount} lastcorrect: {question.LastCorrectAnswer} lastwrong: {question.LastWrongAnswer}");
-                        foreach (var answer in question.Answers)
-                        {
-                            Console.WriteLine($"ANS: {answer.Text}");
-                        }
-                    }
-                }
             });
 
             ImportStatus = "Idle";
