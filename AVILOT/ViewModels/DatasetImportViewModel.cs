@@ -29,7 +29,7 @@ namespace AVILOT.ViewModels
         public DatasetImportViewModel()
         {
 
-            questionsCollections = QuestionsEngine.GetAllColections().Result;
+            //questionsCollections = QuestionsEngine.GetAllColections().Result;
             ImportNewCommand = new Command(ImportNewCollection);
             DeleteDatabaseCommand = new Command(async () =>
             {

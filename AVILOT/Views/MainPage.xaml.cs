@@ -93,5 +93,9 @@ namespace AVILOT.Views
             }
         }
 
+        private async void OpenDebugPage(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new DatasetImportPageV2());
+        }
     }
 }

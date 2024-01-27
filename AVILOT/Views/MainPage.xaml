@@ -245,7 +245,8 @@
                     HorizontalOptions="Start"
                     Padding="50,10"
                     CornerRadius="15"
-                    Margin="5,0"/>
+                    Margin="5,0"
+                    Clicked="OpenDebugPage"/>
                 <RelativeLayout>
                     <ImageButton
                         BackgroundColor="#26ff3232"
