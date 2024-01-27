@@ -1,0 +1,268 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:control="clr-namespace:ProgressRingControl.Forms.Plugin;assembly=ProgressRing.Forms.Plugin"
+             x:Class="AVILOT.Views.MainPage"
+             Title="MainPage"
+             NavigationPage.HasNavigationBar="False" >
+
+    <ScrollView HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Never" Orientation="Vertical">
+        <StackLayout>
+            <StackLayout>
+                <ScrollView x:Name="ChangeDatabaseMenu" Orientation="Horizontal" VerticalOptions="Fill" HeightRequest="0">
+                    <Frame CornerRadius="15" Padding="0">
+                        <Frame.Background>
+                            <LinearGradientBrush>
+                                <GradientStop Color="#00B4DB"  Offset="0.1" />
+                                <GradientStop Color="#0083B0" Offset="1.0" />
+                            </LinearGradientBrush>
+                        </Frame.Background>
+                        <FlexLayout x:Name="AllDatabases" AlignItems="Start" Padding="0,15">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <Frame BackgroundColor="Transparent" Padding="0" Margin="15, 30" CornerRadius="10" BorderColor="White">
+                                        <RelativeLayout>
+                                            <Button BackgroundColor="#1a000000"  HeightRequest="120" WidthRequest="120"></Button>
+                                            <Image Source="airplane" Margin="22,10" BackgroundColor="Transparent"></Image>
+                                            <Label RelativeLayout.WidthConstraint="120" RelativeLayout.YConstraint="90" Text="Typ Letadla" HorizontalTextAlignment="Center" FontSize="18"></Label>
+                                        </RelativeLayout>
+                                    </Frame>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </FlexLayout>
+                    </Frame>
+                </ScrollView>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Fill" VerticalOptions="Fill" Padding="20,30,20,0">
+                    <Label HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" Text="Typ letadla" HorizontalTextAlignment="Start" TextColor="White" FontSize="50" FontAttributes="Bold" FontFamily="Inter"/>
+
+                    <ImageButton
+                        Source="vector2"
+                        HorizontalOptions="FillAndExpand"
+                        BackgroundColor="Transparent"
+                        VerticalOptions="FillAndExpand"
+                        Clicked="ChangeType"
+                        Padding="15">
+                    </ImageButton>
+                </StackLayout>
+            </StackLayout>
+
+
+            <Grid Padding="15" RowSpacing="15" ColumnSpacing="15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="135"/>
+                    <ColumnDefinition Width="210"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="190"/>
+                    <RowDefinition Height="100"/>
+                </Grid.RowDefinitions>
+
+                <Frame x:Name="PercentageTest"
+                    Grid.Column="0"
+                    Grid.Row="0"
+                    BackgroundColor="#0FFFFFFF"
+                    HasShadow="True"
+                    WidthRequest="101"
+                    Margin="0"
+                    CornerRadius="15"
+                    VerticalOptions="Fill"
+                    HorizontalOptions="Fill">
+
+                    <StackLayout VerticalOptions="FillAndExpand">
+                        <Label Text="Current test" TextColor="#CCFFFFFF" FontSize="18" VerticalTextAlignment="Start" HorizontalTextAlignment="Center" FontFamily="Inter"></Label>
+                        <RelativeLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Margin="0,5">
+                            <control:ProgressRing x:Name="progressBar" FlowDirection="LeftToRight" RelativeLayout.XConstraint="0" RelativeLayout.YConstraint="0" HeightRequest="100" RingProgressColor="White" RingBaseColor="#26FFFFFF" Scale="1" WidthRequest="100" RingThickness="7" ></control:ProgressRing>
+                            <control:ProgressRing RelativeLayout.XConstraint="12.5" RelativeLayout.YConstraint="12.5" HeightRequest="75" RingBaseColor="#26FFFFFF" Scale="1" WidthRequest="75" RingThickness="1"  Progress="0"></control:ProgressRing>
+                            <StackLayout 
+                                RelativeLayout.XConstraint="0"
+                                RelativeLayout.YConstraint="0"
+                                RelativeLayout.HeightConstraint="100"
+                                RelativeLayout.WidthConstraint="100"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                Orientation="Horizontal"
+                                Spacing="0">
+                                <Label x:Name="progress" TextColor="White" FontSize="32" FontAttributes="Bold" Padding="2"></Label>
+                                <Label Text="%"  FontSize="18" VerticalOptions="Center" HorizontalTextAlignment="Center"></Label>
+                            </StackLayout>
+                        </RelativeLayout>
+                        <Label Text="completed" HorizontalOptions="CenterAndExpand" VerticalOptions="End"></Label>
+                    </StackLayout>
+                </Frame>
+
+                <Frame x:Name="Streak"
+                    Grid.Column="0"
+                    Grid.Row="1"
+                    BackgroundColor="#0FFFFFFF"
+                    CornerRadius="15"
+                    Margin="0"
+                    HeightRequest="80"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Fill"
+                    Padding="15">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                        <Label x:Name="streak" TextColor="White" FontAttributes="Bold" FontFamily="Inter" FontSize="42" VerticalOptions="Center" HorizontalOptions="CenterAndExpand"></Label>
+                        <StackLayout HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand">
+                            <Image Source="streak_img"/>
+                            <Label Text="Streak" TextColor="#99FFFFFF" FontFamily="Inter" FontSize="12" HorizontalOptions="Center"></Label>
+                        </StackLayout>
+                    </StackLayout>
+                </Frame>
+
+                <Frame x:Name="ContinueTest"
+                    Grid.Column="1"
+                    Grid.RowSpan="2"
+                    BackgroundColor="#00B4DB"
+                    Padding="0"
+                    CornerRadius="15">
+                    <Frame.Background>
+                        <LinearGradientBrush>
+                            <GradientStop Color="#0083B0"  Offset="0.1" />
+                            <GradientStop Color="#00B4DB" Offset="1.0" />
+                        </LinearGradientBrush>
+                    </Frame.Background>
+                    <RelativeLayout>
+                        <Label 
+                            Text="Continue current test:"
+                            TextColor="#CCFFFFFF" 
+                            VerticalTextAlignment="Top" 
+                            HorizontalTextAlignment="Start" 
+                            FontFamily="Inter" 
+                            RelativeLayout.XConstraint="15" 
+                            RelativeLayout.YConstraint="20"
+                            FontSize="14"/>
+                        <Label
+                            x:Name="continueLastTest"
+                            TextColor="#FFFFFF" 
+                            FontFamily=" Inter"
+                            FontSize="32"
+                            FontAttributes="Bold"
+                            RelativeLayout.XConstraint="15"
+                            RelativeLayout.YConstraint="40" />
+                        <Image 
+                            Source="lines" 
+                            RelativeLayout.XConstraint="0" 
+                            RelativeLayout.YConstraint="10"/>
+                        <Image 
+                            Source="start" 
+                            RelativeLayout.XConstraint="145" 
+                            RelativeLayout.YConstraint="250"
+                            HeightRequest="30"
+                            WidthRequest="30"/>
+                        <Button 
+                            x:Name="continueLastTestButton"
+                            BackgroundColor="#1A000000"
+                            Text="Continue"
+                            TextTransform="None"
+                            CharacterSpacing="1.5"
+                            FontAttributes="None"
+                            TextColor="White"
+                            Padding="0,0,50,0"
+                            FontSize="Large"
+                            RelativeLayout.XConstraint="15"
+                            RelativeLayout.YConstraint="240"
+                            Clicked="NavigateToTestPage"
+                            WidthRequest="180"
+                            HeightRequest="50"
+                            HorizontalOptions="Start"
+                            Margin="0"
+                            CornerRadius="10">
+                        </Button>
+                    </RelativeLayout>
+                </Frame>
+            </Grid>
+
+            <BoxView Background="#FFFFFF" Opacity="0.15" HeightRequest="2" Margin="30,2"></BoxView>
+
+            <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never" VerticalScrollBarVisibility="Never" VerticalOptions="Fill">
+                <FlexLayout x:Name="AllCollections" AlignItems="Start" Padding="5">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <Frame BackgroundColor="#1FFFFFFF"
+                                   HeightRequest="280"
+                                   WidthRequest="180"
+                                   CornerRadius="15"
+                                   HorizontalOptions="Start"
+                                   VerticalOptions="FillAndExpand"
+                                   Margin="10">
+                                <StackLayout Spacing="0" VerticalOptions="FillAndExpand">
+                                    <Label Text="Start" TextColor="#99FFFFFF" FontFamily="Inter" FontSize="24"/>
+                                    <Label Text="{Binding Name}" TextColor="White" FontAttributes="Bold" FontFamily="Inter" FontSize="42"/>
+                                    <BoxView Background="#FFFFFF" Opacity="0.15" HeightRequest="2" Margin="0,10"></BoxView>
+                                    <Label Text="{Binding Id, StringFormat='This test contains all the aviable questions. They appear randomly. Etc... some other info. Collections ID is {0}.'}" TextColor="#CCFFFFFF" FontFamily="Inter" FontSize="14" HeightRequest="100"></Label>
+
+                                    <Button 
+                                        BackgroundColor="#1A000000"
+                                        Text="Result"
+                                        TextColor="White"
+                                        Padding="0"
+                                        FontSize="Large"
+                                        Clicked="NavigateToResultPage"
+                                        BindingContext="{Binding Id}"
+                                        HorizontalOptions="Start"
+                                        Margin="0"
+                                        CornerRadius="10">
+                                    </Button>
+                                    
+                                    <RelativeLayout HeightRequest="60"  WidthRequest="180" VerticalOptions="EndAndExpand">
+                                        <Frame RelativeLayout.XConstraint="70" HorizontalOptions="End" HeightRequest="60" Padding="0" CornerRadius="10" BackgroundColor="#00B4DB" WidthRequest="110">
+                                            <Frame.Background>
+                                                <LinearGradientBrush>
+                                                    <GradientStop Color="#0083B0" Offset="0.1" />
+                                                    <GradientStop Color="#00B4DB" Offset="1.0" />
+                                                </LinearGradientBrush>
+                                            </Frame.Background>
+                                        </Frame>
+                                        <Button 
+                                            Clicked="NavigateToTestPage" 
+                                            BindingContext="{Binding Id}"
+                                            BackgroundColor="#1FFFFFFF" 
+                                            CornerRadius="10" 
+                                            HeightRequest="60" 
+                                            WidthRequest="180"
+                                            VerticalOptions="EndAndExpand"
+                                            Text="Test"
+                                            TextTransform="None"
+                                            Padding="60,0,0,0"
+                                            FontSize="34">                                            
+                                        </Button>
+                                    </RelativeLayout>
+                                </StackLayout>
+
+                            </Frame>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+
+                </FlexLayout>
+            </ScrollView>
+
+            <BoxView Background="#FFFFFF" Opacity="0.15" HeightRequest="2" Margin="30,2"></BoxView>
+
+            <StackLayout Orientation="Horizontal" HeightRequest="85" Padding="10">
+                <ImageButton
+                    BackgroundColor="#0FFFFFFF"
+                    Source="settings"
+                    HorizontalOptions="Start"
+                    Padding="50,10"
+                    CornerRadius="15"
+                    Margin="5,0"
+                    Clicked="OpenDebugPage"/>
+                <RelativeLayout>
+                    <ImageButton
+                        BackgroundColor="#26ff3232"
+                        Source="delete"
+                        HorizontalOptions="StartAndExpand"
+                        Padding="25,20,130,15"
+                        CornerRadius="15"
+                        Margin="5,0"
+                        Clicked="DeleteAnswers">
+                    </ImageButton>
+                    <Label RelativeLayout.XConstraint="80" RelativeLayout.YConstraint="15" Text="Delete Wrong" TextColor="#99ffffff" FontSize="20"></Label>
+                    <Label RelativeLayout.XConstraint="80" RelativeLayout.YConstraint="40" Text="Answers" TextColor="White" FontSize="24"></Label>
+
+                </RelativeLayout>
+            </StackLayout>
+
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

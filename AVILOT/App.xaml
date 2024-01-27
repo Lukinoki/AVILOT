@@ -7,26 +7,29 @@
     -->
     <Application.Resources>
         <ResourceDictionary>
-            <Color x:Key="Primary">#2196F3</Color>
-            <Style TargetType="Button">
-                <Setter Property="TextColor" Value="White"></Setter>
-                <Setter Property="VisualStateManager.VisualStateGroups">
-                    <VisualStateGroupList>
-                        <VisualStateGroup x:Name="CommonStates">
-                            <VisualState x:Name="Normal">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
-                                </VisualState.Setters>
-                            </VisualState>
-                            <VisualState x:Name="Disabled">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="#332196F3" />
-                                </VisualState.Setters>
-                            </VisualState>
-                        </VisualStateGroup>
-                    </VisualStateGroupList>
+            <Color x:Key="White">white</Color>
+
+            <Style TargetType="ContentPage" ApplyToDerivedTypes="True">
+                <Setter Property="Background">
+                    <LinearGradientBrush EndPoint="0,1">
+                        <GradientStop
+                            Color="#003461"
+                            Offset="0.1" />
+                        <GradientStop 
+                            Color="#000428"
+                            Offset="1.0" />
+                    </LinearGradientBrush>
                 </Setter>
             </Style>
-        </ResourceDictionary>        
+
+            <Style TargetType="Label" ApplyToDerivedTypes="True">
+                <Setter Property="TextColor" Value="{StaticResource White}"/>
+            </Style>
+
+            <Style TargetType="Button" ApplyToDerivedTypes="True">
+                <Setter Property="TextColor" Value="{StaticResource White}"/>
+            </Style>
+            
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
