@@ -13,7 +13,19 @@ namespace AVILOT
     public static class BackendService
     {
         public static Database db { get; private set; }
-        public static Category selectedCategory { get; set; }
+
+        private static Category _selectedCategory { get; set;}
+        public static Category selectedCategory
+        {
+            get {
+                return _selectedCategory; 
+            }
+            set
+            {
+                _selectedCategory = value;
+                AVILOT.App.Settings.SelectedCategory = value.category_id;
+            }
+        }
 
         public async static Task InitializeAsync(string dbPath)
         {
@@ -33,7 +45,7 @@ namespace AVILOT
                 try
                 {
                     await loadDefaultDataset();
-                    
+
                 }
                 catch (Exception e)
                 {
@@ -42,7 +54,9 @@ namespace AVILOT
 
                 AVILOT.App.Settings.DBInitialized = true;
             }
-            
+
+            await initSelectedCategory();            
+
         }
         private async static Task loadDefaultDataset()
         {
@@ -53,6 +67,36 @@ namespace AVILOT
             await BackendService.db.updateDataset(resource, resourceName);
             Console.WriteLine("dataset updated");
         } 
+
+        private async static Task initSelectedCategory()
+        {
+            if (AVILOT.App.Settings.SelectedCategory != "")
+            {
+                var category = await db.getCategoryById(AVILOT.App.Settings.SelectedCategory);
+                if (category == null)
+                {
+                    AVILOT.App.Settings.SelectedCategory = "";
+                }
+                else
+                {
+                    _selectedCategory = category;
+                }
+            }
+            if (AVILOT.App.Settings.SelectedCategory == "")
+            {
+                var categories = await db.getCategories();
+                var firstCategory = categories.FirstOrDefault();
+                if (firstCategory == null)
+                {
+                    throw new Exception("No categories found");
+                }
+                else
+                {
+                    _selectedCategory = firstCategory;
+                    AVILOT.App.Settings.SelectedCategory = firstCategory.category_id;
+                }
+            }
+        }
 
         
     }
