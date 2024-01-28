@@ -1,4 +1,4 @@
-﻿using AVILOT.AVQuestionsEngine;
+﻿using AVILOT.Backend.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -16,18 +16,19 @@ namespace AVILOT.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ResultPage : ContentPage
     {
-        public static async Task<ResultPage> CreateResultPageAsync(QuestionsCollection Collection)
+        public static async Task<ResultPage> CreateResultPageAsync(Test test)
         {
-            var Questions = await Collection.GetAllQuestions();
-            var AnsweredCorrectCount = await Collection.GetAnsweredCorrectCount();
-            var AnsweredWrongCount = await Collection.GetAnsweredWrongCount();
+            var Questions = await BackendService.db.getTestQuestions(test);
+            var template = await BackendService.db.getTestTestTemplate(test);
+            var AnsweredCorrectCount = 7; // not implemented yet
+            var AnsweredWrongCount = 3; // not implemented yet
 
-            ResultPage questionPage = new ResultPage(Collection.Name, Questions, AnsweredCorrectCount, AnsweredWrongCount);
+            ResultPage questionPage = new ResultPage(template.headline, Questions, AnsweredCorrectCount, AnsweredWrongCount);
 
             return questionPage;
         }
 
-        public ResultPage(string Name, Question[] Questions, int AnsweredCorrectCount, int AnsweredWrongCount)
+        public ResultPage(string Name, List<Question> Questions, int AnsweredCorrectCount, int AnsweredWrongCount)
         {
             InitializeComponent();
 
@@ -35,18 +36,15 @@ namespace AVILOT.Views
             CorrectAnswers.Text = AnsweredCorrectCount.ToString();
             WrongAnswers.Text = AnsweredWrongCount.ToString();
 
-            for (var i = 0; i < Questions.Count(); i++)
-            {
-                BindableLayout.SetItemsSource(QuestionList, Questions);
-            }
+            BindableLayout.SetItemsSource(QuestionList, Questions);
         }
 
-        private void ShowAnswers(object sender, EventArgs e)
+        private async void ShowAnswers(object sender, EventArgs e)
         {
 
             Xamarin.Forms.ImageButton buttonImage = (Xamarin.Forms.ImageButton)sender;
             Question question = (Question)buttonImage.BindingContext;
-            Answer[] answers = question.Answers;
+            List<Answer> answers = await BackendService.db.getAnswers(question);
             StackLayout ParentStackLayout = (StackLayout)buttonImage.Parent;
             StackLayout ChildernStackLayout = (StackLayout)ParentStackLayout.Children[1];
             
@@ -56,7 +54,7 @@ namespace AVILOT.Views
                 buttonImage.Source = "vector2";
 
 
-                for (var i = 0; i < answers.Length; i++)
+                for (var i = 0; i < answers.Count; i++)
                 {
                     var answer = new Frame
                     {
@@ -69,14 +67,14 @@ namespace AVILOT.Views
 
                         Content = new Label
                         {
-                            Text = answers[i].Text,
+                            Text = answers[i].answer_text,
                             FontFamily = "Inter",
                             FontSize = 22,
                             TextTransform = TextTransform.None,
                             TextColor = Color.White,
                         }
                     };
-                    if (i == question.CorrectAnswerIndex) {
+                    if (answers[i].correct) {
                         answer.BackgroundColor = Color.FromHex("#3300FF19");
                     }
                     ChildernStackLayout.Children.Add(answer);
@@ -86,7 +84,7 @@ namespace AVILOT.Views
             {
                 buttonImage.Source = "vector1";
 
-                for (var i = 0; i < answers.Length; i++)
+                for (var i = 0; i < answers.Count; i++)
                 {
                     ChildernStackLayout.Children.RemoveAt(1);
                 }

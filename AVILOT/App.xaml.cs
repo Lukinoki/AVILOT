@@ -4,7 +4,6 @@ using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Xamarin.Essentials;
-using AVILOT.AVQuestionsEngine;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -20,6 +19,16 @@ namespace AVILOT
                 get => Preferences.Get(nameof(FirstRun), true);
                 set => Preferences.Set(nameof(FirstRun), value);
             }
+            public static bool DBInit
+            {
+                get => Preferences.Get(nameof(DBInit), true);
+                set => Preferences.Set(nameof(DBInit), value);
+            }
+            public static bool DBInitialized
+            {
+                get => Preferences.Get(nameof(DBInitialized), false);
+                set => Preferences.Set(nameof(DBInitialized), value);
+            }
         }
 
         public App()
@@ -27,39 +36,14 @@ namespace AVILOT
             InitializeComponent();
 
             Device.SetFlags(new string[] { "Brush_Experimental" });
+            
 
-            // on application first run 
-            if (Settings.FirstRun)
-            {
-                Task.Run(async () =>
-                {
-                    // Import question collections to database from csv
 
-                    var assembly = Assembly.GetExecutingAssembly();
-                    var resourceName = "AVILOT.PLA.csv";
-                    using var reader = new StreamReader(assembly.GetManifestResourceStream(resourceName));
-                    await QuestionsEngine.ImportQuestionsFromCsv(reader, "Test1");
-
-                    //just test collection with only few questions
-                    var assembly2 = Assembly.GetExecutingAssembly();
-                    var resourceName2 = "AVILOT.PLA2.csv";
-                    using var reader2 = new StreamReader(assembly2.GetManifestResourceStream(resourceName2));
-                    await QuestionsEngine.ImportQuestionsFromCsv(reader2, "Test2");
-
-                    Settings.FirstRun = false;
-
-                }).Wait();
-
-                MainPage = new NavigationPage(new Welcome());
-
-            }
-            else
-            {
-                MainPage = new NavigationPage(new MainPage());
-            }
+            MainPage = new NavigationPage(new LoadingPage());
 
 
         }
+
         protected override void OnSleep()
         {
         }
@@ -67,5 +51,6 @@ namespace AVILOT
         protected override void OnResume()
         {
         }
+
     }
 }

@@ -1,4 +1,4 @@
-﻿using AVILOT.AVQuestionsEngine;
+﻿using AVILOT.Backend.Models;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -12,81 +12,89 @@ namespace AVILOT.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TestPage : ContentPage
     {
+        private Question currentQuestion;
+        private Test currentTest;
 
-        public static async Task<TestPage> CreateTestPageAsync(QuestionsCollection Collection)
+        public static async Task<TestPage> CreateTestPageAsync(Test test)
         {
-
-            var Questions = await Collection.GetAllQuestions();
+            var Questions = await BackendService.db.getTestQuestions(test);
             Random random = new Random();
-            int QuestionId = random.Next(0,Questions.Length);
+            int QuestionId = random.Next(0,Questions.Count);
 
             var question = Questions[QuestionId];
-            var QuestionCount = await Collection.GetQuestionCount();
-            var AnsweredQuestionsCount = await Collection.GetAnsweredCount();
-            var AnsweredCorrectCount = await Collection.GetAnsweredCorrectCount();
-            var AnsweredWrongCount = await Collection.GetAnsweredWrongCount();
+            var QuestionCount = Questions.Count;
+            var AnsweredQuestionsCount = 10; // not implemented yet
+            var AnsweredCorrectCount = 7; // not implemented yet
+            var AnsweredWrongCount = 3; // not implemented yet
 
-            TestPage questionPage = new TestPage(question, QuestionCount, AnsweredQuestionsCount, AnsweredCorrectCount, AnsweredWrongCount);
+            TestPage questionPage = new TestPage(question, QuestionCount, AnsweredQuestionsCount, AnsweredCorrectCount, AnsweredWrongCount, test);
+
+            await questionPage.InitAsync();
 
             return questionPage;
         }
 
-        public TestPage(Question Question, int QuestionCount, int AnsweredQuestionsCount, int AnsweredCorrectCount, int AnsweredWrongCount)
+        public TestPage(Question Question, int QuestionCount, int AnsweredQuestionsCount, int AnsweredCorrectCount, int AnsweredWrongCount, Test test)
         {
 
             InitializeComponent();
-            question.Text = Question.Text;
+            question.Text = Question.headline;
             AllCount.Text = QuestionCount.ToString();
             AnsweredCount.Text = AnsweredQuestionsCount.ToString();
             CorrectAnswers.Text = AnsweredCorrectCount.ToString();
             WrongAnswers.Text = AnsweredWrongCount.ToString();
-
+            currentQuestion = Question;
+            currentTest = test;
 
             // generate button for each answer
+            
+        }
 
-            for (var i = 0; i < Question.Answers.Count(); i++)
+        public async Task InitAsync()
+        {
+            var answers = await BackendService.db.getAnswers(currentQuestion);
+            for (var i = 0; i < answers.Count(); i++)
             {
-                int[] a = new int[] { i, Question.Id };
-                var answer = new Button
+                var answerButton = new Button
                 {
-                    Text = Question.Answers[i].Text,
+                    Text = answers[i].answer_text,
                     Margin = 5,
                     BackgroundColor = Color.FromHex("#1FFFFFFF"),
                     CornerRadius = 15,
                     FontFamily = "Inter",
                     FontSize = 22,
-                    BindingContext = (i, Question),
+                    BindingContext = (answers[i]),
                     TextTransform = TextTransform.None,
-                    Padding=10,
+                    Padding = 10,
                 };
-                answer.Clicked += Answer;
+                answerButton.Clicked += Answer;
 
-                Answers.Children.Add(answer);
+                Answers.Children.Add(answerButton);
 
 
             }
         }
 
         private async void Answer(object sender, EventArgs e) {
-            Button answer = (Button)sender;
-            (int i, Question Question) = ((int, Question))answer.BindingContext;
+            Button answerButton = (Button)sender;
+            var answer = (Answer)answerButton.BindingContext;
 
-            if (i == Question.CorrectAnswerIndex)
+            await BackendService.db.answerTestQuestion(answer, currentTest);
+            
+            if (answer.correct)
             {
-                await Question.Select(i);
-                answer.BackgroundColor = Color.FromHex("#1F00FF19");
-                answer.BorderWidth = 2;
-                answer.BorderColor = Color.FromHex("#9900FF19");
+                answerButton.BackgroundColor = Color.FromHex("#1F00FF19");
+                answerButton.BorderWidth = 2;
+                answerButton.BorderColor = Color.FromHex("#9900FF19");
 
             }
             else
             {
-                await Question.Select(i);
-                answer.BackgroundColor = Color.Red;
+                answerButton.BackgroundColor = Color.Red;
             }
 
 
-            foreach (var child in ((answer).Parent as StackLayout).Children) { 
+            foreach (var child in ((answerButton).Parent as StackLayout).Children) { 
                 if (child is Button)
                 {
                     Button button = (child as Button);
@@ -96,7 +104,7 @@ namespace AVILOT.Views
             }
 
             await Task.Delay(2000);
-            await Navigation.PushAsync(await CreateTestPageAsync(Question.ParentCollection));
+            await Navigation.PushAsync(await CreateTestPageAsync(currentTest));
 
         }
 

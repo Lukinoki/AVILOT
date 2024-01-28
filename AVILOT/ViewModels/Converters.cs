@@ -1,4 +1,4 @@
-﻿using AVILOT.AVQuestionsEngine;
+﻿using AVILOT.Backend.Models;
 using AVILOT.Views;
 using System;
 using System.Diagnostics;
@@ -20,8 +20,20 @@ namespace AVILOT.ViewModels.Converters
             {
                 Question question = (Question)value;
 
-                DateTime? LastCorrectAnswerDate = (DateTime?)question.LastCorrectAnswer;
-                DateTime? LastWrongAnswerDate = (DateTime?)question.LastWrongAnswer;
+                DateTime? LastCorrectAnswerDate = null;
+                DateTime? LastWrongAnswerDate = null;
+
+                // changed this to hacky way to make it work
+                // TODO: Make it work
+                var rng = new Random();
+                if (rng.NextDouble() < 0.5)
+                {
+                    LastCorrectAnswerDate = DateTime.Now;
+                }
+                if (rng.NextDouble() < 0.5)
+                {
+                    LastWrongAnswerDate = DateTime.Now;
+                }
 
                 if (LastCorrectAnswerDate != null && LastWrongAnswerDate == null)
                 {
