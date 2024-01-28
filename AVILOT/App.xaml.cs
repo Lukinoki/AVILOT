@@ -29,6 +29,11 @@ namespace AVILOT
                 get => Preferences.Get(nameof(DBInitialized), false);
                 set => Preferences.Set(nameof(DBInitialized), value);
             }
+            public static string SelectedCategory
+            {
+                get => Preferences.Get(nameof(SelectedCategory), "");
+                set => Preferences.Set(nameof(SelectedCategory), value);
+            }
         }
 
         public App()
