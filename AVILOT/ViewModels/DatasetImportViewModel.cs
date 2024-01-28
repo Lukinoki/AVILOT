@@ -9,6 +9,7 @@ using Xamarin.Forms;
 using Xamarin.Essentials;
 using System.IO;
 using System.Threading.Tasks;
+using AVILOT.Backend.Models;
 
 namespace AVILOT.ViewModels
 {
@@ -31,12 +32,33 @@ namespace AVILOT.ViewModels
 
         public Command PrintPages { get; }
         public string ImportStatus { get; set; }
+
+        public Command ExportDb { get; set; }
+
+        public Command ClearUserData { get; set; }
         public DatasetImportViewModel()
         {
 
             ImportNewCommand = new Command(async () =>
             {
                 await ImportNewCollection();
+            });
+
+            ExportDb = new Command(() =>
+            {
+
+                var src = Path.Combine(Xamarin.Essentials.FileSystem.AppDataDirectory, "db.sqlite");
+                var dst = Path.Combine("/storage/emulated/0/Download/db.sqlite");
+                File.Copy(src, dst, true);
+            });
+
+            ClearUserData = new Command(async () =>
+            {
+                var con = BackendService.db.debugDatabaseGetAsyncSQLiteConnection();
+                await con.DeleteAllAsync<Test>();
+                await con.DeleteAllAsync<PracticeAnswer>();
+                await con.DeleteAllAsync<TestQuestion>();
+                await con.DeleteAllAsync<QuestionBookmark>();
             });
 
 

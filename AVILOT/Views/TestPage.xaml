@@ -2,7 +2,6 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:ViewModels="clr-namespace:AVILOT.ViewModels"
              x:Class="AVILOT.Views.TestPage"
-             x:DataType="ViewModels:TestBinding"
              NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
         <StackLayout x:Name="test" Padding="10,40,10,10">

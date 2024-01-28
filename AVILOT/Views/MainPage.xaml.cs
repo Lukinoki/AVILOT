@@ -20,19 +20,14 @@ namespace AVILOT.Views
         {
             base.OnAppearing();
 
-            if (BackendService.selectedCategory == null)
-            {
-                var categories = await BackendService.db.getCategories();
-                Console.WriteLine(categories);
-                BackendService.selectedCategory = categories.FirstOrDefault();
-                if (BackendService.selectedCategory == null)
-                {
-                    Console.WriteLine("selected category is null");
-                }
-            }
+            Console.WriteLine("here");
+            
             // change airplane type
             var testTemplates = await BackendService.db.getTestTemplates(BackendService.selectedCategory);
             BindableLayout.SetItemsSource(AllCollections, testTemplates);
+
+
+            SelectedCategoryLabel.BindingContext = BackendService.selectedCategory;
 
             // last started test 
             var activeTests = await BackendService.db.getActiveTests(BackendService.selectedCategory);
@@ -54,6 +49,8 @@ namespace AVILOT.Views
             progressBar.Progress = 0.68;
             // streak
             streak.Text = 12.ToString();
+
+            Console.WriteLine("out");
         }
 
         public MainPage()
@@ -70,7 +67,11 @@ namespace AVILOT.Views
             Test test;
             if (activeTests.Count() > 0)
             {
-                test = activeTests.Last();
+                foreach (var t in activeTests)
+                {
+                    Console.WriteLine(t.test_id);
+                }
+                test = activeTests[0];
             }
             else
             {

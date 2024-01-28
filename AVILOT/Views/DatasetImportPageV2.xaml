@@ -5,6 +5,8 @@
     <ContentPage.Content>
         <StackLayout>
             <Label Text="{Binding ImportStatus}"></Label>
+            <Button Text="Dump database" Command="{Binding ExportDb}"></Button>
+            <Button Text="Clear user data" Command="{Binding ClearUserData}"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

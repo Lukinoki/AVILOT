@@ -18,6 +18,11 @@ namespace AVILOT.Views
         public static async Task<TestPage> CreateTestPageAsync(Test test)
         {
             var Questions = await BackendService.db.getTestQuestions(test);
+            foreach (var q in Questions)
+            {
+                Console.WriteLine(q);
+            }
+
             Random random = new Random();
             int QuestionId = random.Next(0,Questions.Count);
 
@@ -46,14 +51,14 @@ namespace AVILOT.Views
             currentQuestion = Question;
             currentTest = test;
 
-            // generate button for each answer
             
         }
 
         public async Task InitAsync()
         {
+            // create answer buttons
             var answers = await BackendService.db.getAnswers(currentQuestion);
-            for (var i = 0; i < answers.Count(); i++)
+            for (var i = 0; i < answers.Count; i++)
             {
                 var answerButton = new Button
                 {

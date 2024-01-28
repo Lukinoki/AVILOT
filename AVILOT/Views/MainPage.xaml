@@ -24,7 +24,7 @@
                                         <RelativeLayout>
                                             <Button BackgroundColor="#1a000000"  HeightRequest="120" WidthRequest="120"></Button>
                                             <Image Source="airplane" Margin="22,10" BackgroundColor="Transparent"></Image>
-                                            <Label RelativeLayout.WidthConstraint="120" RelativeLayout.YConstraint="90" Text="Typ Letadla" HorizontalTextAlignment="Center" FontSize="18"></Label>
+                                            <Label RelativeLayout.WidthConstraint="120" RelativeLayout.YConstraint="90" Text="{Binding headline}" HorizontalTextAlignment="Center" FontSize="18"></Label>
                                         </RelativeLayout>
                                     </Frame>
                                 </DataTemplate>
@@ -33,7 +33,7 @@
                     </Frame>
                 </ScrollView>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Fill" VerticalOptions="Fill" Padding="20,30,20,0">
-                    <Label HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" Text="Typ letadla" HorizontalTextAlignment="Start" TextColor="White" FontSize="50" FontAttributes="Bold" FontFamily="Inter"/>
+                    <Label x:Name="SelectedCategoryLabel" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" Text="{Binding headline}" HorizontalTextAlignment="Start" TextColor="White" FontSize="50" FontAttributes="Bold" FontFamily="Inter"/>
 
                     <ImageButton
                         Source="vector2"

@@ -14,6 +14,12 @@ namespace AVILOT.Backend
         readonly SQLiteAsyncConnection con;
         readonly string path;
 
+        public SQLiteAsyncConnection debugDatabaseGetAsyncSQLiteConnection()
+        {
+            return con;
+        }
+
+
         public Database(string dbPath)
         {
             con = new SQLiteAsyncConnection(dbPath);
@@ -67,6 +73,11 @@ namespace AVILOT.Backend
             return await con.Table<Category>().ToListAsync();
         }
 
+        public async Task<Category> getCategoryById(string id)
+        {
+            return await con.Table<Category>().Where(c => c.category_id == id).FirstOrDefaultAsync();
+        }
+
         public async Task<List<TestTemplate>> getTestTemplates(Category category)
         {
             var category_id = category.category_id;
@@ -109,12 +120,16 @@ namespace AVILOT.Backend
                 WHERE Test.test_id = ?
                 ORDER BY RANDOM()
                 LIMIT (
-                    SELECT TestTemplate.question_count FROM Test
-                    LEFT JOIN TestTemplate ON
-                        Test.template = TestTemplate.template_id
-                    WHERE Test.test_id = ?
+                    COALESCE(
+                        (SELECT TestTemplate.question_count FROM Test
+                        LEFT JOIN TestTemplate ON
+                            Test.template = TestTemplate.template_id
+                        WHERE Test.test_id = ?),
+                        (SELECT COUNT(*) as cnt FROM Question)
+                    )
                 )
                 ", test.test_id, test.test_id);
+            Console.WriteLine(questionIds);
             List<TestQuestion> testQuestions = questionIds.Select(
                     id => new TestQuestion()
                     {
@@ -137,15 +152,48 @@ namespace AVILOT.Backend
 
         public async Task<List<Question>> getTestQuestions(Test test)
         {
+            var tests = await con.Table<Test>().ToListAsync();
+            foreach (var t in tests)
+            {
+                Console.WriteLine($"{t.test_id}, {t.template}");
+            }
+            var questions = await con.Table<Question>().ToListAsync();
+            foreach (var q in questions)
+            {
+                Console.WriteLine($"{q.question_id}, {q.headline}");
+            }
+            var testQuestions = await con.Table<TestQuestion>().ToListAsync();
+            foreach (var tq in testQuestions)
+            {
+                Console.WriteLine($"{tq.id}, {tq.question}, {tq.test}");
+            }
+
+            // uses "SELECT COUNT(*) as cnt FROM" to limit it to number of questions in the database,
+            // but this is a temporary fix, this is only needed to make it work with non-testable templates and templates with question_count = null
+            // maybe is good enough...
+
             return await con.QueryAsync<Question>(@"
-                SELECT Question.* FROM Test
-                LEFT JOIN TestQuestion ON
-                    Test.test_id = TestQuestion.test
+                SELECT Question.question_id FROM Test
+                LEFT JOIN TestTemplate ON
+                    Test.template = TestTemplate.template_id
+                LEFT JOIN Template_Question ON
+                    TestTemplate.template_id = Template_Question.template
                 LEFT JOIN Question ON
-                    TestQuestion.question = Question.question_id
+                    Template_Question.question = Question.question_id
                 WHERE Test.test_id = ?
-                ORDER BY TestQuestion.id
-                ", test.test_id);
+                ORDER BY RANDOM()
+                LIMIT (
+                    COALESCE(
+                        (SELECT TestTemplate.question_count FROM Test
+                        LEFT JOIN TestTemplate ON
+                            Test.template = TestTemplate.template_id
+                        WHERE Test.test_id = ?),
+                        (SELECT COUNT(*) as cnt FROM Question)
+                    )
+                )
+                ", test.test_id, test.test_id); 
+
+
         }
         public async Task<List<Answer>> getAnswers(Question question)
         {
