@@ -37,7 +37,7 @@ namespace AVILOT.Views
             await BackendService.InitializeAsync(Path.Combine(Xamarin.Essentials.FileSystem.AppDataDirectory, "db.sqlite"));
             Console.WriteLine("Backend init");
 
-
+            await BackendService.checkDatasetUpdate();
             // on application first run 
             if (Settings.FirstRun)
             {

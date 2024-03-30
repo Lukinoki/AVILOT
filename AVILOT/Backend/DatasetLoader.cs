@@ -10,6 +10,8 @@ using CsvHelper.Configuration;
 using System.IO;
 using System.Threading.Tasks;
 using AVILOT.Backend.Models;
+using CsvConfiguration = CsvHelper.Configuration.CsvConfiguration;
+
 
 namespace AVILOT.Backend
 {
@@ -23,12 +25,11 @@ namespace AVILOT.Backend
     internal class DatasetLoader
     {
         readonly private SQLiteAsyncConnection conn;
-        readonly private CsvConfiguration csvConfig;
-
+        private CsvConfiguration csvConfig;
         public DatasetLoader(SQLiteAsyncConnection conn)
         {
             this.conn = conn;
-            csvConfig = new CsvConfiguration(CultureInfo.InvariantCulture)
+            csvConfig = new CsvHelper.Configuration.CsvConfiguration(CultureInfo.InvariantCulture)
             {
                 HasHeaderRecord = true,
                 Encoding = Encoding.UTF8,
@@ -52,9 +53,10 @@ namespace AVILOT.Backend
             }
         }
 
-        public async Task updateDataset(Stream stream, string filename)
+        public async Task updateDataset(Stream stream, string filename, bool recreateTables = true)
         {
             
+
             if (Path.GetExtension(filename) != ".zip")
             {
                 throw new InvalidFileExeption(filename);
@@ -67,7 +69,8 @@ namespace AVILOT.Backend
                     "Category.csv",
                     "TestTemplate.csv",
                     "Answer.csv",
-                    "Template_Question.csv"
+                    "Template_Question.csv",
+                    "Media.csv"
                 };
 
                 foreach (var requiredFile in requiredFiles)
@@ -85,12 +88,31 @@ namespace AVILOT.Backend
                     sConn.DeleteAll<TestTemplate>();
                     sConn.DeleteAll<Answer>();
                     sConn.DeleteAll<Template_Question>();
+                    sConn.DeleteAll<Media>();
+
+                    if (recreateTables)
+                    {
+                        sConn.DropTable<Question>();
+                        sConn.DropTable<Category>();
+                        sConn.DropTable<TestTemplate>();
+                        sConn.DropTable<Answer>();
+                        sConn.DropTable<Template_Question>();
+                        sConn.DropTable<Media>();
+
+                        sConn.CreateTable<Question>();
+                        sConn.CreateTable<Category>();
+                        sConn.CreateTable<TestTemplate>();
+                        sConn.CreateTable<Answer>();
+                        sConn.CreateTable<Template_Question>();
+                    }
+
 
                     loadTableCSV<Question>(zip.GetEntry("Question.csv").Open(), sConn);
                     loadTableCSV<Category>(zip.GetEntry("Category.csv").Open(), sConn);
                     loadTableCSV<TestTemplate>(zip.GetEntry("TestTemplate.csv").Open(), sConn);
                     loadTableCSV<Answer>(zip.GetEntry("Answer.csv").Open(), sConn);
                     loadTableCSV<Template_Question>(zip.GetEntry("Template_Question.csv").Open(), sConn);
+                    loadTableCSV<Media>(zip.GetEntry("Media.csv").Open(), sConn);
                 });
 
             }
@@ -108,11 +130,12 @@ namespace AVILOT.Backend
             }
             catch (Exception ex)
             {
+                throw ex;
                 if (filename != null)
                 {
                     throw new InvalidFileExeption($"File '{filename}' in archive is invalid", ex);
                 }
-                else
+                else 
                 {
                     throw new InvalidFileExeption($"File in archive loading into table '{typeof(T).Name}' is invalid", ex);
                 }

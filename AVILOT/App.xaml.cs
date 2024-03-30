@@ -34,6 +34,16 @@ namespace AVILOT
                 get => Preferences.Get(nameof(SelectedCategory), "");
                 set => Preferences.Set(nameof(SelectedCategory), value);
             }
+            public static string DatasetVersion
+            {
+                get => Preferences.Get(nameof(DatasetVersion), "");
+                set => Preferences.Set(nameof(DatasetVersion), value);
+            }
+
+            public static string AppVersion
+            {
+                get => Xamarin.Essentials.AppInfo.VersionString;
+            }
         }
 
         public App()

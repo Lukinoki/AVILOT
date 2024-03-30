@@ -11,6 +11,7 @@ using System.Runtime.InteropServices.ComTypes;
 using AVILOT.Backend.Models;
 using AVILOT.Backend;
 using Xamarin.Essentials;
+using System.Collections.Generic;
 
 namespace AVILOT.Views
 {
@@ -40,13 +41,24 @@ namespace AVILOT.Views
             }
             else
             {
-                continueLastTestButton.BindingContext = "no active test";
+                var randomTestTemplate = testTemplates.ElementAt(new Random().Next(testTemplates.Count()));
+                continueLastTestButton.BindingContext = randomTestTemplate;
+                continueLastTest.Text = "Start new random";
+
+
             }
             // progress
-            // calculate percentage of correct answers
-            // await QuestionsCollection.GetAnsweredCorrectPercentage();
-            progress.Text = 68.ToString();
-            progressBar.Progress = 0.68;
+            // TODO: lukas, change the round thing to show percentage of how big percentage the user already answered correct, instead of current test
+
+
+            var answeredCorrectCount = (await BackendService.db.getLastAnsweredInCategory(BackendService.selectedCategory, true)).Count;
+            var answeredWrongCount = (await BackendService.db.getLastAnsweredInCategory(BackendService.selectedCategory, false)).Count;
+            var numberOfQuestions = (await BackendService.db.getQuestionsInCategory(BackendService.selectedCategory)).Count;
+
+
+            Console.WriteLine($"{answeredCorrectCount} {answeredWrongCount} {numberOfQuestions}");
+            progress.Text = ((int)((float)answeredCorrectCount / (float)numberOfQuestions * 100)).ToString();
+            progressBar.Progress = (float)answeredCorrectCount / (float)numberOfQuestions;
             // streak
             streak.Text = 12.ToString();
 
@@ -64,16 +76,8 @@ namespace AVILOT.Views
             this.IsEnabled = false;
             var testTemplate = (TestTemplate)((Button)sender).BindingContext;
             var activeTests = await BackendService.db.getActiveTests(testTemplate);
-            Test test;
-            if (activeTests.Count() > 0)
-            {
-                foreach (var t in activeTests)
-                {
-                    Console.WriteLine(t.test_id);
-                }
-                test = activeTests[0];
-            }
-            else
+            Test test = activeTests.Find(t => t.template.Equals(testTemplate.template_id));
+            if (test == null)
             {
                 test = await BackendService.db.startTest(testTemplate);
             }

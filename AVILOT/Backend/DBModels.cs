@@ -18,8 +18,6 @@ namespace AVILOT.Backend.Models
         public int points { get; set; } = 1;
         public string? hint { get; set; }
         public int? code { get; set; }
-        [NotNull]
-        public string? media_type { get; set; }
         public string? media { get; set; }
         public string? media_flow { get; set; }
     }
@@ -27,7 +25,7 @@ namespace AVILOT.Backend.Models
     public class Answer
     {
         [PrimaryKey]
-        public int answer_id { get; set; }
+        public string answer_id { get; set; }
         [Indexed, NotNull]
         public string question { get; set; }
         public int order_index { get; set; }
@@ -100,7 +98,7 @@ namespace AVILOT.Backend.Models
         [Indexed]
         public DateTime answered_time { get; set; }
         [Indexed]
-        public int answer { get; set; }
+        public string answer { get; set; }
         public int? test { get; set; }
     }
 
@@ -111,4 +109,17 @@ namespace AVILOT.Backend.Models
         [NotNull]
         public string question { get; set; }
     }
+
+    public class Media
+    {
+        [PrimaryKey]
+        public string media_id { get; set; }
+        [NotNull]
+        public string mime_type { get; set; }
+        [NotNull]
+        public DateTime date_updated { get; set; }
+        [NotNull]
+        public int size { get; set; }
+    }
+
 }

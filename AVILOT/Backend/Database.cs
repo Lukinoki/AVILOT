@@ -24,6 +24,7 @@ namespace AVILOT.Backend
         {
             con = new SQLiteAsyncConnection(dbPath);
             path = dbPath;
+            Console.WriteLine("created db at " + con.DatabasePath);
 
         }
         // must be called before running
@@ -35,14 +36,12 @@ namespace AVILOT.Backend
         // misc
         private async Task createTables()
         {
-            Console.WriteLine("create tables");
-            Stopwatch sw = Stopwatch.StartNew();
+            
             await Task.WhenAll(
-                con.CreateTablesAsync<Category, TestTemplate, Template_Question, Question, Answer>(),
+                con.CreateTablesAsync<Category, TestTemplate, Template_Question, Question>(),
+                con.CreateTablesAsync<Answer, Media>(),
                 con.CreateTablesAsync<Test, TestQuestion, PracticeAnswer, QuestionBookmark>(SQLite.CreateFlags.AutoIncPK)
             );
-            sw.Stop();
-            Console.WriteLine($"created tables in {sw.ElapsedMilliseconds}");
 
             // old
             /*await con.CreateTableAsync<Category>();
@@ -129,7 +128,12 @@ namespace AVILOT.Backend
                     )
                 )
                 ", test.test_id, test.test_id);
-            Console.WriteLine(questionIds);
+            Console.WriteLine(String.Join(", ", questionIds));
+            Console.WriteLine(questionIds.Count);
+            if (questionIds.Count == 0 || questionIds[0] == null)
+            {
+                throw new Exception($"No questions found for testemplate: {test.template}");
+            }
             List<TestQuestion> testQuestions = questionIds.Select(
                     id => new TestQuestion()
                     {
@@ -149,51 +153,19 @@ namespace AVILOT.Backend
             await fillTestWithQuestions(test);
             return test;
         }
+        public async Task endTest(Test test)
+        {
+            test.end_time = DateTime.Now;
+            await con.UpdateAsync(test);
+        }
 
         public async Task<List<Question>> getTestQuestions(Test test)
         {
-            var tests = await con.Table<Test>().ToListAsync();
-            foreach (var t in tests)
-            {
-                Console.WriteLine($"{t.test_id}, {t.template}");
-            }
-            var questions = await con.Table<Question>().ToListAsync();
-            foreach (var q in questions)
-            {
-                Console.WriteLine($"{q.question_id}, {q.headline}");
-            }
-            var testQuestions = await con.Table<TestQuestion>().ToListAsync();
-            foreach (var tq in testQuestions)
-            {
-                Console.WriteLine($"{tq.id}, {tq.question}, {tq.test}");
-            }
-
-            // uses "SELECT COUNT(*) as cnt FROM" to limit it to number of questions in the database,
-            // but this is a temporary fix, this is only needed to make it work with non-testable templates and templates with question_count = null
-            // maybe is good enough...
-
             return await con.QueryAsync<Question>(@"
-                SELECT Question.question_id FROM Test
-                LEFT JOIN TestTemplate ON
-                    Test.template = TestTemplate.template_id
-                LEFT JOIN Template_Question ON
-                    TestTemplate.template_id = Template_Question.template
-                LEFT JOIN Question ON
-                    Template_Question.question = Question.question_id
-                WHERE Test.test_id = ?
-                ORDER BY RANDOM()
-                LIMIT (
-                    COALESCE(
-                        (SELECT TestTemplate.question_count FROM Test
-                        LEFT JOIN TestTemplate ON
-                            Test.template = TestTemplate.template_id
-                        WHERE Test.test_id = ?),
-                        (SELECT COUNT(*) as cnt FROM Question)
-                    )
-                )
-                ", test.test_id, test.test_id); 
-
-
+                SELECT Question.* FROM TestQuestion
+                INNER JOIN Question ON TestQuestion.question = Question.question_id
+                WHERE TestQuestion.test = ?
+                ", test.test_id);
         }
         public async Task<List<Answer>> getAnswers(Question question)
         {
@@ -202,15 +174,22 @@ namespace AVILOT.Backend
 
         public async Task<PracticeAnswer> answerTestQuestion(Answer answer, Test test)
         {
-            await con.ExecuteAsync(@"
+            var changed = await con.ExecuteAsync(@"
             INSERT OR REPLACE INTO PracticeAnswer (row_id, answered_time, answer, test)
             VALUES (
-                COALESCE((SELECT row_id FROM PracticeAnswer WHERE answer = ? AND test = ?), NULL),
+                (SELECT pa.row_id FROM
+                    (SELECT * FROM PracticeAnswer
+                    WHERE PracticeAnswer.answer = ? AND PracticeAnswer.test = ?) AS op
+                LEFT JOIN Answer a ON op.answer = a.answer_id
+                LEFT JOIN Question q ON a.question = q.question_id
+                LEFT JOIN Answer aa ON q.question_id = aa.question
+                INNER JOIN PracticeAnswer pa ON aa.answer_id = pa.answer AND pa.test = op.test),
                 ?,
                 ?,
                 ?
             );
             ", answer.answer_id, test.test_id, DateTime.Now, answer.answer_id, test.test_id);
+            Console.WriteLine($"insering {answer.answer_id} answer changed: {changed} rows");
             return await con.Table<PracticeAnswer>().Where(pa => (pa.answer == answer.answer_id) && (pa.test == test.test_id)).FirstAsync();
         }
 
@@ -224,6 +203,98 @@ namespace AVILOT.Backend
             };
             await con.InsertAsync(record);
             return record;
+        }
+
+        public async Task<Question> getPracticeQuestion(TestTemplate template)
+        {
+            // get practice questions from template, prioritize questions that were answered the least
+            return await con.FindWithQueryAsync<Question>(@"
+                SELECT Question.* FROM Template_Question
+                INNER JOIN Question ON Template_Question.question = Question.question_id
+                LEFT JOIN (
+                    SELECT Answer.question, COUNT(*) as cnt FROM PracticeAnswer
+                    INNER JOIN Answer ON PracticeAnswer.answer = Answer.answer_id
+                    GROUP BY Answer.question
+                ) AS AnswerCount ON AnswerCount.question = Question.question_id
+                WHERE Template_Question.template = ?
+                ORDER BY COALESCE(AnswerCount.cnt, 0)
+                LIMIT 1", template.template_id);
+        }
+
+        // stats
+
+        public async Task<List<Question>> getAnsweredInTest(Test test, bool answeredCorrect)
+        {
+            return await con.QueryAsync<Question>(@"
+                SELECT Question.*  FROM TestQuestion
+                INNER JOIN Question ON Question.question_id = TestQuestion.question
+                INNER JOIN Answer ON Answer.question = Question.question_id
+                INNER JOIN PracticeAnswer ON PracticeAnswer.answer = Answer.answer_id AND PracticeAnswer.test = TestQuestion.test
+                WHERE TestQuestion.test = ? AND Answer.correct = ?
+            ", test.test_id, answeredCorrect);
+        }
+        public async Task<List<Question>> getAnsweredInTest(Test test)
+        {
+            return await con.QueryAsync<Question>(@"
+                SELECT Question.*  FROM TestQuestion
+                INNER JOIN Question ON Question.question_id = TestQuestion.question
+                INNER JOIN Answer ON Answer.question = Question.question_id
+                INNER JOIN PracticeAnswer ON PracticeAnswer.answer = Answer.answer_id AND PracticeAnswer.test = TestQuestion.test
+                WHERE TestQuestion.test = ?
+            ", test.test_id);
+        }
+
+        public async Task<List<Question>> getLastAnsweredInCategory(Category category, bool correct)
+        {
+            return await con.QueryAsync<Question>(@"
+                SELECT Question.*
+                FROM TestTemplate
+                INNER JOIN Template_Question ON TestTemplate.template_id = Template_Question.template
+                INNER JOIN Question ON Template_Question.question = Question.question_id
+                INNER JOIN Answer ON Question.question_id = Answer.question
+                WHERE TestTemplate.category = ? AND Answer.answer_id IN (SELECT answer_id FROM (
+                    SELECT Answer.answer_id, Answer.correct, MAX(PracticeAnswer.answered_time) as _ FROM Answer
+                    INNER JOIN PracticeAnswer ON Answer.answer_id = PracticeAnswer.answer
+                    GROUP BY Answer.question)
+                    WHERE correct = ?
+                )
+                GROUP BY Question.question_id
+            ", category.category_id, correct);
+        }
+
+        public async Task<List<Question>> getQuestionsInCategory(Category category)
+        {
+            return await con.QueryAsync<Question>(@"
+                SELECT Question.*
+                FROM TestTemplate
+                INNER JOIN Template_Question ON TestTemplate.template_id = Template_Question.template
+                INNER JOIN Question ON Template_Question.question = Question.question_id
+                WHERE TestTemplate.category = ?
+                GROUP BY Question.question_id"
+                , category.category_id);
+        }
+
+        public async Task<List<Question>> getLastAnsweredInTemplate(TestTemplate testTemplate, bool correct)
+        {
+            return await con.QueryAsync<Question>(@"
+                SELECT Question.*
+                FROM TestTemplate
+                INNER JOIN Template_Question ON TestTemplate.template_id = Template_Question.template
+                INNER JOIN Question ON Template_Question.question = Question.question_id
+                INNER JOIN Answer ON Question.question_id = Answer.question
+                WHERE TestTemplate.template_id = ? AND Answer.answer_id IN (SELECT answer_id FROM (
+                    SELECT Answer.answer_id, Answer.correct, MAX(PracticeAnswer.answered_time) as _ FROM Answer
+                    INNER JOIN PracticeAnswer ON Answer.answer_id = PracticeAnswer.answer
+                    GROUP BY Answer.question)
+                    WHERE correct = ?
+                )
+                GROUP BY Question.question_id
+            ", testTemplate.template_id, correct);
+        }
+
+        public async Task<int> getQuestionCount()
+        {
+            return await con.ExecuteScalarAsync<int>("SELECT COUNT(*) FROM Question");
         }
     }
 

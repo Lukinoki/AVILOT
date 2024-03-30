@@ -7,6 +7,10 @@ using AVILOT.Backend.Models;
 using System.Linq;
 using System.IO;
 using System.Reflection;
+using System.Diagnostics;
+using SQLite_dev.backend;
+using System.Runtime.ConstrainedExecution;
+using AVILOT.backend;
 
 namespace AVILOT
 {
@@ -27,24 +31,27 @@ namespace AVILOT
             }
         }
 
-        public async static Task InitializeAsync(string dbPath)
+        public async static Task InitializeAsync(string dbPath, string? defDatasetPath = null)
         {
             if (!File.Exists(dbPath)) // check if this is the first run
             {
                 AVILOT.App.Settings.DBInitialized = false;
             }
+            Console.WriteLine("initializing backend");
+            Stopwatch sw = Stopwatch.StartNew();
 
             Console.WriteLine("create db object");
             db = new Database(dbPath);
-            Console.WriteLine("init db");
+            Console.WriteLine($"created db obj in {sw.ElapsedMilliseconds}");
+            sw.Restart();
             await db.InitializeAsync();
-            Console.WriteLine("db init");
+            Console.WriteLine($"initialized db in {sw.ElapsedMilliseconds}");
 
             if (!AVILOT.App.Settings.DBInitialized)
             {
                 try
                 {
-                    await loadDefaultDataset();
+                    await loadDefaultDataset(defDatasetPath);
 
                 }
                 catch (Exception e)
@@ -58,15 +65,51 @@ namespace AVILOT
             await initSelectedCategory();            
 
         }
-        private async static Task loadDefaultDataset()
+        private async static Task loadDefaultDataset(string? defDatasetPath = null)
         {
-            var assembly = Assembly.GetExecutingAssembly();
-            var resourceName = "AVILOT.dataset_default.zip";
-            var resource = assembly.GetManifestResourceStream(resourceName);
-            Console.WriteLine("loading default dataset");
-            await BackendService.db.updateDataset(resource, resourceName);
-            Console.WriteLine("dataset updated");
+            var sw = Stopwatch.StartNew();
+            if (defDatasetPath != null)
+            {
+                Console.WriteLine("loading dataset from file");
+                await BackendService.db.updateDataset(defDatasetPath);
+            }
+            else
+            {
+                var assembly = Assembly.GetExecutingAssembly();
+                var resourceName = "AVILOT.dataset_default.zip";
+                var resource = assembly.GetManifestResourceStream(resourceName);
+                Console.WriteLine("loading default dataset from default resource");
+                await BackendService.db.updateDataset(resource, resourceName);
+                if (!(await db.getCategories()).Contains(selectedCategory))
+                {
+                    var cats = await db.getCategories();
+                    if (cats.Count > 0)
+                    {
+                        selectedCategory = cats.First();
+                    }
+                }
+            }
+            Console.WriteLine($"updated dataset dataset in {sw.ElapsedMilliseconds}");
+            
         } 
+
+        public async static Task<bool> checkDatasetUpdate() {
+
+            var response = await Sync.requestCheckDatasetUpdate(AVILOT.App.Settings.AppVersion, AVILOT.App.Settings.DatasetVersion);
+            if (response == null)
+            {
+                Console.WriteLine("dataset up to date");
+                return false;
+            }
+            Console.WriteLine("downloading new dataset");
+            var datasetPath = await Sync.downloadDatasetFile(response.url, response.filename);
+            Console.WriteLine("loading new dataset");
+            await loadDefaultDataset(datasetPath);
+            Sync.deleteDatasetFile(datasetPath);
+            Console.WriteLine("done updating dataset");
+            AVILOT.App.Settings.DatasetVersion = response.filename;
+            return true;
+        }
 
         private async static Task initSelectedCategory()
         {
