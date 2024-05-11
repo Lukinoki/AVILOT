@@ -44,7 +44,7 @@
                                 </ImageButton>
                                 <StackLayout Orientation="Vertical">
                                     <Label x:Name="QuestionText"
-                                           Text="{Binding Text}" 
+                                           Text="{Binding headline}" 
                                            TextColor="{Binding ., Converter={StaticResource GetQuestionColor}}" 
                                            FontSize = "24" 
                                            FontAttributes="Bold"

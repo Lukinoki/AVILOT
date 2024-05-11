@@ -4,7 +4,7 @@
              x:Class="AVILOT.Views.TestPage"
              NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
-        <StackLayout x:Name="test" Padding="10,40,10,10">
+        <StackLayout x:Name="test" Padding="10,40,10,10">+
             <StackLayout Orientation="Horizontal">
                 <ImageButton Padding="15" Clicked="GoBack" Source="back"  BackgroundColor="Transparent" HorizontalOptions="Start" VerticalOptions="Center"></ImageButton>
                 <ImageButton Padding="15" Clicked="Like" Source="like" BackgroundColor="Transparent" HorizontalOptions="EndAndExpand" VerticalOptions="Center"></ImageButton>

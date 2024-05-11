@@ -27,7 +27,6 @@ namespace AVILOT.Views
             var testTemplates = await BackendService.db.getTestTemplates(BackendService.selectedCategory);
             BindableLayout.SetItemsSource(AllCollections, testTemplates);
 
-
             SelectedCategoryLabel.BindingContext = BackendService.selectedCategory;
 
             // last started test 
@@ -105,20 +104,20 @@ namespace AVILOT.Views
 
             Xamarin.Forms.ImageButton buttonImage = (Xamarin.Forms.ImageButton)sender;
 
-            if (ChangeDatabaseMenu.HeightRequest == 0)
+            if (ChangeCategoryMenu.HeightRequest == 0)
             {
                 var databases = await BackendService.db.getCategories();
 
                 for (int i = 0; i < databases.Count(); i++)
                 {
-                    BindableLayout.SetItemsSource(AllDatabases, databases);
+                    BindableLayout.SetItemsSource(AllCategories, databases);
                 }
-                ChangeDatabaseMenu.HeightRequest = 180;
+                ChangeCategoryMenu.HeightRequest = 180;
                 buttonImage.Source = "vector3";
             }
             else
             {
-                ChangeDatabaseMenu.HeightRequest = 0;
+                ChangeCategoryMenu.HeightRequest = 0;
                 buttonImage.Source = "vector2";
             }
         }

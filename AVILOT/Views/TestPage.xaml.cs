@@ -95,7 +95,9 @@ namespace AVILOT.Views
             }
             else
             {
-                answerButton.BackgroundColor = Color.Red;
+                answerButton.BackgroundColor = Color.FromHex("#1FD10000");
+                answerButton.BorderWidth = 2;
+                answerButton.BorderColor = Color.FromHex("#99D10000");
             }
 
 
