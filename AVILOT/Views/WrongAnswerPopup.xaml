@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<xct:Popup 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+    Size="300,300"
+    xct:CornerRadiusEffect.CornerRadius="25"
+    x:Class="AVILOT.Views.WrongAnswerPopup">
+    <Frame BorderColor="White" CornerRadius="7" HasShadow="True" Padding="2">
+        <StackLayout Padding="15">
+            <StackLayout.Background>
+                <LinearGradientBrush EndPoint="0,1">
+                    <GradientStop
+                            Color="#000428"
+                            Offset="0.1" />
+                    <GradientStop 
+                            Color="#003461"
+                            Offset="1.0" />
+                </LinearGradientBrush>
+            </StackLayout.Background>
+            
+            <Label Text="Wrong answer!" TextColor="White" FontAttributes="Bold" FontFamily="Inter" FontSize="34" VerticalOptions="Start" HorizontalOptions="CenterAndExpand"  />
+
+            <StackLayout BackgroundColor="#1Affffff" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Padding="10" xct:CornerRadiusEffect.CornerRadius="20">
+                <Label Text="Correct was:" FontSize="18" VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand"/>
+                <Label x:Name="correct" FontSize="18" VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand"/>
+
+                <Frame
+                    Padding="0" 
+                    CornerRadius="10"
+                    HeightRequest="60" 
+                    VerticalOptions="End"
+                    HorizontalOptions="FillAndExpand">
+                    <Frame.Background>
+                        <LinearGradientBrush>
+                            <GradientStop Color="#0083B0" Offset="0.1" />
+                            <GradientStop Color="#00B4DB" Offset="1.0" />
+                        </LinearGradientBrush>
+                    </Frame.Background>
+                    <Button
+                        x:Name="continueButton"
+                        Text="continue"
+                        Clicked="ClosePopup"
+                        BackgroundColor="#1FFFFFFF" 
+                        CornerRadius="10"
+                        VerticalOptions="FillAndExpand"
+                        HorizontalOptions="FillAndExpand"
+                        TextTransform="None"
+                        Padding="0,0,0,0"
+                        FontSize="34">
+                    </Button>
+                </Frame>
+            </StackLayout>
+        </StackLayout>
+    </Frame>
+</xct:Popup>

@@ -4,6 +4,9 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Xamarin.CommunityToolkit.Extensions;
+using Xamarin.CommunityToolkit.PlatformConfiguration.iOSSpecific;
+using Xamarin.CommunityToolkit.UI.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,6 +17,8 @@ namespace AVILOT.Views
     {
         private Question currentQuestion;
         private Test currentTest;
+
+        public bool c;
 
         public static async Task<TestPage> CreateTestPageAsync(Test test)
         {
@@ -50,6 +55,7 @@ namespace AVILOT.Views
             WrongAnswers.Text = AnsweredWrongCount.ToString();
             currentQuestion = Question;
             currentTest = test;
+            c = false;
 
             
         }
@@ -68,7 +74,7 @@ namespace AVILOT.Views
                     CornerRadius = 15,
                     FontFamily = "Inter",
                     FontSize = 22,
-                    BindingContext = (answers[i]),
+                    BindingContext = ((answers[i], currentQuestion)),
                     TextTransform = TextTransform.None,
                     Padding = 10,
                 };
@@ -82,26 +88,10 @@ namespace AVILOT.Views
 
         private async void Answer(object sender, EventArgs e) {
             Button answerButton = (Button)sender;
-            var answer = (Answer)answerButton.BindingContext;
+            var (answer, question) = ((Answer, Question))answerButton.BindingContext;
 
-            await BackendService.db.answerTestQuestion(answer, currentTest);
-            
-            if (answer.correct)
+            foreach (var child in ((answerButton).Parent as StackLayout).Children)
             {
-                answerButton.BackgroundColor = Color.FromHex("#1F00FF19");
-                answerButton.BorderWidth = 2;
-                answerButton.BorderColor = Color.FromHex("#9900FF19");
-
-            }
-            else
-            {
-                answerButton.BackgroundColor = Color.FromHex("#1FD10000");
-                answerButton.BorderWidth = 2;
-                answerButton.BorderColor = Color.FromHex("#99D10000");
-            }
-
-
-            foreach (var child in ((answerButton).Parent as StackLayout).Children) { 
                 if (child is Button)
                 {
                     Button button = (child as Button);
@@ -110,14 +100,36 @@ namespace AVILOT.Views
                 }
             }
 
-            await Task.Delay(2000);
-            await Navigation.PushAsync(await CreateTestPageAsync(currentTest));
+            await BackendService.db.answerPracticeQuestion(answer);
 
+            var answers = await BackendService.db.getAnswers(question);
+            var correct = answers.Find(a => a.correct);
+            
+            if (answer.correct)
+            {
+                answerButton.BackgroundColor = Color.FromHex("#1F00FF19");
+                answerButton.BorderWidth = 2;
+                answerButton.BorderColor = Color.FromHex("#9900FF19");
+
+                await Task.Delay(1000);
+
+            }
+            else
+            {
+                answerButton.BackgroundColor = Color.FromHex("#1FD10000");
+                answerButton.BorderWidth = 2;
+                answerButton.BorderColor = Color.FromHex("#99D10000");
+                var testp = (TestPage)Navigation.NavigationStack.Last();
+                var popup = new WrongAnswerPopup(correct.answer_text) { IsLightDismissEnabled = false };
+                await Navigation.ShowPopupAsync(popup);
+            }
+            await Navigation.PushAsync(await CreateTestPageAsync(currentTest));
         }
 
         private void Like(object sender, EventArgs e)
         {
             Debug.Write("TODO: like");
+
         }
 
          async void Back() 
