@@ -17,9 +17,19 @@ namespace AVILOT.Views
 {
     public partial class MainPage : ContentPage
     {
+        private int streakCount = 0;
+        private DateTime lastCheckedDate;
         protected async override void OnAppearing() // I changed this to make it "work", TODO: make it work in the intended way
         {
             base.OnAppearing();
+
+            // Load streak data from settings
+            LoadStreakData();
+
+            // Update streak UI
+            UpdateStreakUI();
+
+            CheckInButton_Clicked();
 
             Console.WriteLine("here");
             
@@ -58,8 +68,6 @@ namespace AVILOT.Views
             Console.WriteLine($"{answeredCorrectCount} {answeredWrongCount} {numberOfQuestions}");
             progress.Text = ((int)((float)answeredCorrectCount / (float)numberOfQuestions * 100)).ToString();
             progressBar.Progress = (float)answeredCorrectCount / (float)numberOfQuestions;
-            // streak
-            streak.Text = 12.ToString();
 
             Console.WriteLine("out");
         }
@@ -121,6 +129,46 @@ namespace AVILOT.Views
                 buttonImage.Source = "vector2";
             }
         }
+
+        private void LoadStreakData()
+        {
+            // Retrieve streak count and last checked date from settings
+            streakCount = App.Settings.StreakCount;
+            lastCheckedDate = App.Settings.LastCheckedDate;
+        }
+        private void SaveStreakData()
+        {
+            // Save streak count and last checked date to settings
+            App.Settings.StreakCount = streakCount;
+            App.Settings.LastCheckedDate = lastCheckedDate;
+        }
+        private void UpdateStreakUI()
+        {
+            // Update streak count label
+            // streak
+            streak.Text = streakCount.ToString();
+        }
+
+        private void CheckInButton_Clicked()
+        {
+            // Check if today is the next day after the last checked date
+            if (DateTime.Today == lastCheckedDate.AddDays(1))
+            {
+                // Increase streak count
+                streakCount++;
+            }
+            else
+            {
+                // Reset streak count
+                streakCount = 1;
+            }
+            // Update last checked date
+            lastCheckedDate = DateTime.Today;
+            // Save streak data
+            SaveStreakData();
+            // Update streak UI
+            UpdateStreakUI();
+         }
 
         private async void OpenDebugPage(object sender, EventArgs e)
         {

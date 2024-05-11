@@ -19,6 +19,16 @@ namespace AVILOT
                 get => Preferences.Get(nameof(FirstRun), true);
                 set => Preferences.Set(nameof(FirstRun), value);
             }
+            public static int StreakCount
+            {
+                get => Preferences.Get(nameof(StreakCount), 0);
+                set => Preferences.Set(nameof(StreakCount), value);
+            }
+            public static DateTime LastCheckedDate
+            {
+                get => Preferences.Get(nameof(LastCheckedDate), DateTime.Today);
+                set => Preferences.Set(nameof(LastCheckedDate), value);
+            }
             public static bool DBInit
             {
                 get => Preferences.Get(nameof(DBInit), true);
